@@ -5,12 +5,11 @@ import api.touchbase.dynamodb.MemberDao;
 import api.touchbase.dynamodb.models.Member;
 import api.touchbase.exceptions.InvalidInputException;
 import api.touchbase.exceptions.InvalidPasswordException;
-import api.touchbase.exceptions.MemberNotFoundException;
 import api.touchbase.exceptions.UsernameTakenException;
 import api.touchbase.models.objects.MemberModel;
 import api.touchbase.models.requests.member.CreateMemberRequest;
 import api.touchbase.models.results.member.CreateMemberResult;
-import api.touchbase.utils.IdGenerator;
+import api.touchbase.utils.TouchBaseIdGenerator;
 import api.touchbase.utils.InputStringValidator;
 import api.touchbase.utils.NotificationCreator;
 import api.touchbase.utils.TouchBasePasswordAuthentication;
@@ -31,10 +30,12 @@ import java.util.List;
 public class CreateMemberActivity implements RequestHandler<CreateMemberRequest, CreateMemberResult> {
     private final Logger log = LogManager.getLogger();
     private final MemberDao memberDao;
+    private NotificationCreator notificationCreator;
 
     @Inject
     public CreateMemberActivity(MemberDao memberDao) {
         this.memberDao = memberDao;
+        this.notificationCreator = new NotificationCreator();
     }
 
     /**
@@ -60,43 +61,32 @@ public class CreateMemberActivity implements RequestHandler<CreateMemberRequest,
         if (name == null || name.isBlank()) {
             throw new InvalidInputException("You must provide a username");
         }
-
         if (password == null || password.isBlank()) {
             throw new InvalidInputException("You must provide a password");
         }
-
         if (!InputStringValidator.isValidPassword(password)) {
             throw new InvalidPasswordException(
                     String.format("The password provided {%s} did not follow the required format", password));
         }
-
-        try {
-            memberDao.queryMemberNames(name);
+        if (memberDao.usernameExists(name)) {
             throw new UsernameTakenException("Username is taken");
-        } catch (MemberNotFoundException e) {
-
-            NotificationCreator notificationCreator = new NotificationCreator();
-
-            List<Notification> notifications = new ArrayList<>();
-            notifications.add(notificationCreator.newMemberNotification());
-
-            Member memberToCreate = new Member();
-            String passwordSalt = TouchBasePasswordAuthentication.getRandomSalt();
-            String hashedPassword = TouchBasePasswordAuthentication.hashPassword(passwordSalt.concat(password));
-
-            memberToCreate.setMemberId(IdGenerator.generateId());
-            memberToCreate.setMemberName(name);
-            memberToCreate.setMemberPassword(hashedPassword);
-            memberToCreate.setMemberPasswordSalt(passwordSalt);
-            memberToCreate.setMemberNotifications(notifications);
-
-            memberDao.saveMember(memberToCreate);
-
-            MemberModel model = ModelConverter.toMemberModel(memberToCreate);
-
-            return CreateMemberResult.builder()
-                    .withMember(model)
-                    .build();
         }
+
+        List<Notification> notifications = new ArrayList<>();
+        notifications.add(notificationCreator.touchbaseNewMemberNotification());
+
+        Member memberToCreate = new Member();
+        memberToCreate.setId(TouchBaseIdGenerator.generateId());
+        memberToCreate.setName(name);
+        memberToCreate.setSalt(TouchBasePasswordAuthentication.getRandomSalt());
+        memberToCreate.setPassword(TouchBasePasswordAuthentication.hashPassword(memberToCreate.getSalt()).concat(password));
+        memberToCreate.setMemberNotifications(notifications);
+
+        memberDao.saveMember(memberToCreate);
+
+        return CreateMemberResult.builder()
+                .withMember(ModelConverter.toMemberModel(memberToCreate))
+                .build();
+
     }
 }

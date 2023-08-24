@@ -20,12 +20,12 @@ public class FamilyDao {
         this.mapper = mapper;
     }
 
-    public Family getFamily(String familyId) {
+    public Family getFamily(String id) {
 
-        Family family = mapper.load(Family.class, familyId);
+        Family family = mapper.load(Family.class, id);
 
         if (family == null) {
-            throw new FamilyNotFoundException(String.format("There is no family for the given familyId {%s}", familyId));
+            throw new FamilyNotFoundException(String.format("There is no family for the given id {%s}", id));
         }
 
         return family;
@@ -36,14 +36,14 @@ public class FamilyDao {
         return family;
     }
 
-    public PaginatedQueryList<Family> queryFamilyNames(String familyName) {
+    public PaginatedQueryList<Family> queryFamilyNames(String name) {
         Map<String, AttributeValue> valueMap = new HashMap<>();
-        valueMap.put(":familyName", new AttributeValue().withS(familyName));
+        valueMap.put(":name", new AttributeValue().withS(name));
 
         DynamoDBQueryExpression<Family> queryExpression = new DynamoDBQueryExpression<Family>()
             .withIndexName("FamilyNameIndex")
             .withConsistentRead(false)
-            .withKeyConditionExpression("familyName = :familyName")
+            .withKeyConditionExpression("name = :name")
             .withExpressionAttributeValues(valueMap);
 
         PaginatedQueryList<Family> familyPaginatedQueryList = mapper.query(Family.class, queryExpression);

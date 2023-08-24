@@ -6,6 +6,7 @@ import api.touchbase.exceptions.InvalidInputException;
 import api.touchbase.exceptions.InvalidPasswordException;
 import api.touchbase.models.requests.member.DeleteMemberRequest;
 import api.touchbase.models.results.member.DeleteMemberResult;
+import api.touchbase.utils.TouchBasePasswordAuthentication;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 
@@ -24,20 +25,15 @@ public class DeleteMemberActivity implements RequestHandler<DeleteMemberRequest,
     public DeleteMemberResult handleRequest(final DeleteMemberRequest deleteMemberRequest, Context context) {
         String requestId = deleteMemberRequest.getMemberId();
         String requestPassword = deleteMemberRequest.getMemberPassword();
-        String requestName = deleteMemberRequest.getMemberName();
 
         Member member = memberDao.getMember(requestId);
 
-        if (!requestPassword.equals(member.getMemberPassword())) {
+        if (!TouchBasePasswordAuthentication.isMatchingPassword(member.getSalt(),
+                requestPassword, member.getPassword())) {
+
             throw new InvalidPasswordException(
                     "CANNOT DELETE ACCOUNT! " +
                             "The PASSWORD provided does not match the PASSWORD associated with this account.");
-        }
-
-        if (!requestName.equals(member.getMemberName())) {
-            throw new InvalidInputException(
-                    "CANNOT DELETE ACCOUNT! " +
-                            "The NAME provided does not match the NAME associated with this account.");
         }
 
         memberDao.deleteMember(member);

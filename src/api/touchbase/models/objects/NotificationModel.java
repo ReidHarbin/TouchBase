@@ -1,40 +1,79 @@
 package api.touchbase.models.objects;
 
 public class NotificationModel {
-    private String notificationHeadline;
-    private String notificationDescription;
-    private String notificationSenderName;
-    private String notificationDate;
+    private String headline;
+    private String description;
+    private String senderName;
+    private String date;
 
-    public String getNotificationHeadline() {
-        return notificationHeadline;
+    public NotificationModel() {
+
     }
 
-    public void setNotificationHeadline(String notificationHeadline) {
-        this.notificationHeadline = notificationHeadline;
+    public NotificationModel(Builder builder) {
+        this.headline = builder.headline;
+        this.description = builder.description;
+        this.senderName = builder.senderName;
+        this.date = builder.date;
     }
 
-    public String getNotificationDescription() {
-        return notificationDescription;
+    public String getHeadline() {
+        return headline;
     }
 
-    public void setNotificationDescription(String notificationDescription) {
-        this.notificationDescription = notificationDescription;
+    public String getDescription() {
+        return description;
     }
 
-    public String getNotificationSenderName() {
-        return notificationSenderName;
+    public String getSenderName() {
+        return senderName;
     }
 
-    public void setNotificationSenderName(String notificationSenderName) {
-        this.notificationSenderName = notificationSenderName;
+    public String getDate() {
+        return date;
     }
 
-    public String getNotificationDate() {
-        return notificationDate;
+    @Override
+    public String toString() {
+        return "NotificationModel{" +
+                "headline='" + headline + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
 
-    public void setNotificationDate(String notificationDate) {
-        this.notificationDate = notificationDate;
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static final class Builder {
+        private String headline;
+        private String description;
+        private String senderName;
+        private String date;
+
+        public Builder withHeadline(String headline) {
+            this.headline = headline;
+            return this;
+        }
+
+        public Builder withDescription(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public Builder withSenderName(String senderName) {
+            this.senderName = senderName;
+            return this;
+        }
+
+        public Builder withDate(String date) {
+            this.date = date;
+            return this;
+        }
+
+        public NotificationModel build() {
+            return new NotificationModel(this);
+        }
     }
 }
+

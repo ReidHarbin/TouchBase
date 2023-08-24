@@ -2,51 +2,52 @@ package api.touchbase.dynamodb.models;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Set;
 
 public class Event {
-    private String eventId;
-    private String eventOwnerId;
-    private String eventDescription;
-    private String eventType;
+    private String id;
+    private String ownerId;
+    private String description;
+    private String type;
     private String eventStartMeridian;
     private String eventEndMeridian;
     private LocalDate eventDate;
     private LocalTime eventStartTime;
     private LocalTime eventEndTime;
-    private Set<String> eventAttendingMemberNames;
+    private List<String> attendingMemberNames;
 
 
-    public String getEventId() {
-        return eventId;
+    public String getId() {
+        return id;
     }
 
-    public void setEventId(String eventId) {
-        this.eventId = eventId;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getEventOwnerId() {
-        return eventOwnerId;
+    public String getOwnerId() {
+        return ownerId;
     }
 
-    public void setEventOwnerId(String eventOwnerId) {
-        this.eventOwnerId = eventOwnerId;
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
     }
 
-    public String getEventDescription() {
-        return eventDescription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setEventDescription(String eventDescription) {
-        this.eventDescription = eventDescription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getEventType() {
-        return eventType;
+    public String getType() {
+        return type;
     }
 
-    public void setEventType(String eventType) {
-        this.eventType = eventType;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getEventStartMeridian() {
@@ -81,12 +82,12 @@ public class Event {
         this.eventEndTime = eventEndTime;
     }
 
-    public Set<String> getEventAttendingMemberNames() {
-        return eventAttendingMemberNames;
+    public List<String> getAttendingMemberNames() {
+        return attendingMemberNames;
     }
 
-    public void setEventAttendingMemberNames(Set<String> eventAttendingMemberNames) {
-        this.eventAttendingMemberNames = eventAttendingMemberNames;
+    public void setAttendingMemberNames(List<String> attendingMemberNames) {
+        this.attendingMemberNames = attendingMemberNames;
     }
 
     public String getEventEndMeridian() {
@@ -100,14 +101,14 @@ public class Event {
     @Override
     public String toString() {
         return "Event{" +
-                "eventId='" + eventId + '\'' +
-                ", eventOwnerId='" + eventOwnerId + '\'' +
-                ", description='" + eventDescription + '\'' +
-                ", eventType='" + eventType + '\'' +
+                "eventId='" + id + '\'' +
+                ", eventOwnerId='" + ownerId + '\'' +
+                ", description='" + description + '\'' +
+                ", eventType='" + type + '\'' +
                 ", eventDate=" + eventDate +
                 ", eventStartTime=" + eventStartTime +
                 ", eventEndTime=" + eventEndTime +
-                ", eventAttendingMemberIds=" + eventAttendingMemberNames +
+                ", eventAttendingMemberIds=" + attendingMemberNames +
                 '}';
     }
 }

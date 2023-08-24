@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ModelConverter {
     private final Logger log = LogManager.getLogger();
@@ -25,66 +26,45 @@ public class ModelConverter {
     }
 
     public static MemberModel toMemberModel(Member member) {
-        List<Notification> notifications = new ArrayList<>();
+        List<NotificationModel> notificationModels = new ArrayList<>();
 
         if (member.getMemberNotifications() != null) {
-            for (Notification c : member.getMemberNotifications()) {
-                Notification modelNotification = new Notification();
-
-                modelNotification.setNotificationHeadline(c.getNotificationHeadline());
-                modelNotification.setNotificationSenderName(c.getNotificationSenderName());
-                modelNotification.setNotificationDescription(c.getNotificationDescription());
-                modelNotification.setNotificationDate(c.getNotificationDate());
-
-                notifications.add(modelNotification);
+            for (Notification n : member.getMemberNotifications()) {
+                notificationModels.add(
+                        NotificationModel.builder()
+                                .withDate(n.getDate())
+                                .withDescription(n.getDescription())
+                                .withHeadline(n.getHeadline())
+                                .withSenderName(member.getName()).build());
             }
         }
 
         return MemberModel.builder()
-                .withMemberId(member.getMemberId())
-                .withMemberName(member.getMemberName())
-                .withNotifications(notifications)
-                .withFamilyId(member.getMemberFamilyId())
+                .withId(member.getId())
+                .withName(member.getName())
+                .withNotifications(notificationModels)
+                .withFamilyId(member.getFamilyId())
                 .build();
     }
 
     public static FamilyModel toFamilyModel(Family family) {
-        String familyModelId = family.getFamilyId();
-        String familyModelName = family.getFamilyName();
-        String familyModelPassword = family.getFamilyPassword();
-        List<String> familyModelMemberNames = new ArrayList<>();
-        List<Event> familyModelEvents = new ArrayList<>();
-        for (String name : family.getFamilyMemberNamesToMemberIds().keySet()) {
-            familyModelMemberNames.add(name);
-        }
-
-        for (Event event : family.getFamilyEvents()) {
-            familyModelEvents.add(event);
-        }
-
         return FamilyModel.builder()
-                .withFamilyId(familyModelId)
-                .withFamilyName(familyModelName)
-                .withFamilyPassword(familyModelPassword)
-                .withFamilyMemberNames(familyModelMemberNames)
-                .withFamilyEvents(familyModelEvents)
+                .withId(family.getId())
+                .withName(family.getName())
+                .withMemberNames(new ArrayList<>(family.getMemberNamesToMemberIds().keySet()))
                 .build();
     }
 
+
     public static NotificationModel toNotificationModel(Notification notification) {
-        String notificationHeadline = notification.getNotificationHeadline();
-        String notificationDescription = notification.getNotificationDescription();
-        String notificationSenderName = notification.getNotificationSenderName();
-        String notificationDate = notification.getNotificationDate();
-
-        NotificationModel model = new NotificationModel();
-        model.setNotificationHeadline(notificationHeadline);
-        model.setNotificationDescription(notificationDescription);
-        model.setNotificationSenderName(notificationSenderName);
-        model.setNotificationDate(notificationDate);
-
-        return model;
+        return NotificationModel.builder()
+                .withHeadline(notification.getHeadline())
+                .withDescription(notification.getDescription())
+                .withSenderName(notification.getSenderName())
+                .withDate(notification.getDate())
+                .build();
     }
+
 
     public static EventModel toEventModel(Event event) {
         LocalDate eventDate = event.getEventDate();
@@ -107,13 +87,13 @@ public class ModelConverter {
                event.getEventEndMeridian();
 
 
-        String eventId = event.getEventId();
-        String eventOwnerId = event.getEventOwnerId();
-        String eventDescription = event.getEventDescription();
-        String eventType = event.getEventType();
+        String eventId = event.getId();
+        String eventOwnerId = event.getOwnerId();
+        String eventDescription = event.getDescription();
+        String eventType = event.getType();
         Set<String> eventAttendingMemberIds = new HashSet<>();
 
-        for (String id : event.getEventAttendingMemberNames()) {
+        for (String id : event.getAttendingMemberNames()) {
             eventAttendingMemberIds.add(id);
         }
 

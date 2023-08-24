@@ -5,46 +5,43 @@ import api.touchbase.dynamodb.models.Notification;
 import java.util.List;
 
 public class MemberModel {
-    private String memberId;
-    private String memberName;
-    private List<Notification> notifications;
-    private String memberFamilyId;
+    private String id;
+    private String name;
+    private List<NotificationModel> notifications;
+    private String familyId;
 
     public MemberModel() {
 
     }
+
     public MemberModel(Builder builder) {
-        this.memberId = builder.memberId;
-        this.memberName = builder.memberName;
+        this.id = builder.id;
+        this.name = builder.name;
         this.notifications = builder.notifications;
-        this.memberFamilyId = builder.familyId;
+        this.familyId = builder.familyId;
     }
 
-    public String getMemberId() {
-        return memberId;
+    public String getId() {
+        return id;
     }
 
-    public String getMemberName() {
-        return memberName;
+    public String getName() {
+        return name;
     }
 
-    public List<Notification> getNotifications() {
+    public List<NotificationModel> getNotifications() {
         return notifications;
     }
 
     public String getFamilyId() {
-        return memberFamilyId;
-    }
-
-    public void setFamilyId(String familyId) {
-        this.memberFamilyId = familyId;
+        return familyId;
     }
 
     @Override
     public String toString() {
         return "MemberModel{" +
-                "memberId='" + memberId + '\'' +
-                ", memberName='" + memberName + '\'' +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
                 '}';
     }
 
@@ -53,23 +50,22 @@ public class MemberModel {
     }
 
     public static final class Builder {
-        private String memberId;
-        private String memberName;
-        private String memberPassword;
-        private List<Notification> notifications;
+        private String id;
+        private String name;
         private String familyId;
+        private List<NotificationModel> notifications;
 
-        public Builder withMemberId(String memberIdToUse) {
-            this.memberId = memberIdToUse;
+        public Builder withId(String idToUse) {
+            this.id = idToUse;
             return this;
         }
 
-        public Builder withMemberName(String memberNameToUse) {
-            this.memberName = memberNameToUse;
+        public Builder withName(String nameToUse) {
+            this.name = nameToUse;
             return this;
         }
 
-        public Builder withNotifications(List<Notification> notifications) {
+        public Builder withNotifications(List<NotificationModel> notifications) {
             this.notifications = notifications;
             return this;
         }
@@ -78,7 +74,6 @@ public class MemberModel {
             this.familyId = familyId;
             return this;
         }
-
         public MemberModel build() {
             return new MemberModel(this);
         }

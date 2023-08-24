@@ -9,66 +9,66 @@ import java.util.Map;
 
 @DynamoDBTable(tableName = "touchbase_families")
 public class Family {
-    private String familyId;
-    private String familyName;
-    private String familyPassword;
-    private String familyPasswordSalt;
-    private List<Event> familyEvents;
-    private Map<String, String> familyMemberNamesToMemberIds;
+    private String id;
+    private String name;
+    private String password;
+    private String salt;
+    private List<Event> events;
+    private Map<String, String> memberNamesToMemberIds;
 
     @DynamoDBHashKey(attributeName = "familyId")
-    public String getFamilyId() {
-        return familyId;
+    public String getId() {
+        return id;
     }
 
-    public void setFamilyId(String familyId) {
-        this.familyId = familyId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     @DynamoDBIndexHashKey(globalSecondaryIndexName = "FamilyNameIndex", attributeName = "familyName")
-    public String getFamilyName() {
-        return familyName;
+    public String getName() {
+        return name;
     }
 
-    public void setFamilyName(String familyName) {
-        this.familyName = familyName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @DynamoDBAttribute(attributeName = "familyPassword")
-    public String getFamilyPassword() {
-        return familyPassword;
+    public String getPassword() {
+        return password;
     }
 
-    public void setFamilyPassword(String familyPassword) {
-        this.familyPassword = familyPassword;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @DynamoDBAttribute(attributeName = "familyPasswordSalt")
-    public String getFamilyPasswordSalt() {
-        return familyPasswordSalt;
+    public String getSalt() {
+        return salt;
     }
 
-    public void setFamilyPasswordSalt(String familyPasswordSalt) {
-        this.familyPasswordSalt = familyPasswordSalt;
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 
     @DynamoDBTypeConverted(converter = EventsListConverter.class)
     @DynamoDBAttribute(attributeName = "familyEvents")
-    public List<Event> getFamilyEvents() {
-        return familyEvents;
+    public List<Event> getEvents() {
+        return events;
     }
 
-    public void setFamilyEvents(List<Event> familyEventIds) {
-        this.familyEvents = familyEventIds;
+    public void setEvents(List<Event> familyEventIds) {
+        this.events = familyEventIds;
     }
 
     @DynamoDBTypeConverted(converter = MapConverter.class)
     @DynamoDBAttribute(attributeName = "familyMemberNamesToMemberIds")
-    public Map<String, String> getFamilyMemberNamesToMemberIds() {
-        return familyMemberNamesToMemberIds;
+    public Map<String, String> getMemberNamesToMemberIds() {
+        return memberNamesToMemberIds;
     }
 
-    public void setFamilyMemberNamesToMemberIds(Map<String, String> familyMemberNamesToMemberIds) {
-        this.familyMemberNamesToMemberIds = familyMemberNamesToMemberIds;
+    public void setMemberNamesToMemberIds(Map<String, String> memberNamesToMemberIds) {
+        this.memberNamesToMemberIds = memberNamesToMemberIds;
     }
 }

@@ -7,66 +7,66 @@ import java.util.List;
 
 @DynamoDBTable(tableName = "touchbase_members")
 public class Member {
-    private String memberId;
-    private String memberFamilyId;
-    private String memberName;
-    private String memberPassword;
-    private String memberPasswordSalt;
-    private List<Notification> memberNotifications;
+    private String id;
+    private String familyId;
+    private String name;
+    private String password;
+    private String salt;
+    private List<Notification> notifications;
 
-    @DynamoDBHashKey(attributeName = "memberId")
-    public String getMemberId() {
-        return memberId;
+    @DynamoDBHashKey(attributeName = "id")
+    public String getId() {
+        return id;
     }
 
-    public void setMemberId(String memberId) {
-        this.memberId = memberId;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    @DynamoDBAttribute(attributeName = "memberFamilyId")
-    public String getMemberFamilyId() {
-        return memberFamilyId;
+    @DynamoDBAttribute(attributeName = "familyId")
+    public String getFamilyId() {
+        return familyId;
     }
 
-    public void setMemberFamilyId(String memberFamilyId) {
-        this.memberFamilyId = memberFamilyId;
+    public void setFamilyId(String familyId) {
+        this.familyId = familyId;
     }
 
-    @DynamoDBIndexHashKey(globalSecondaryIndexName = "MemberNameIndex", attributeName = "memberName")
-    public String getMemberName() {
-        return memberName;
+    @DynamoDBIndexHashKey(globalSecondaryIndexName = "MemberNameIndex", attributeName = "name")
+    public String getName() {
+        return name;
     }
 
-    public void setMemberName(String memberName) {
-        this.memberName = memberName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    @DynamoDBAttribute(attributeName = "memberPassword")
-    public String getMemberPassword() {
-        return memberPassword;
+    @DynamoDBAttribute(attributeName = "password")
+    public String getPassword() {
+        return password;
     }
 
-    public void setMemberPassword(String memberPassword) {
-        this.memberPassword = memberPassword;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    @DynamoDBAttribute(attributeName = "memberPasswordSalt")
-    public String getMemberPasswordSalt() {
-        return memberPasswordSalt;
+    @DynamoDBAttribute(attributeName = "salt")
+    public String getSalt() {
+        return salt;
     }
 
-    public void setMemberPasswordSalt(String memberPasswordSalt) {
-        this.memberPasswordSalt = memberPasswordSalt;
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 
 
     @DynamoDBTypeConverted(converter = NotificationsListConverter.class)
-    @DynamoDBAttribute(attributeName = "memberNotifications")
+    @DynamoDBAttribute(attributeName = "notifications")
     public List<Notification> getMemberNotifications() {
-        return memberNotifications;
+        return notifications;
     }
 
     public void setMemberNotifications(List<Notification> memberNotifications) {
-        this.memberNotifications = memberNotifications;
+        this.notifications = memberNotifications;
     }
 }

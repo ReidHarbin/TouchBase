@@ -11,16 +11,15 @@ import api.touchbase.models.objects.FamilyModel;
 import api.touchbase.models.requests.family.CreateEventRequest;
 import api.touchbase.models.results.family.CreateEventResult;
 import api.touchbase.utils.EventInserter;
-import api.touchbase.utils.IdGenerator;
+import api.touchbase.utils.TouchBaseIdGenerator;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 
 import javax.inject.Inject;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class CreateEventActivity implements RequestHandler<CreateEventRequest, CreateEventResult> {
     private final FamilyDao familyDao;
@@ -61,19 +60,19 @@ public class CreateEventActivity implements RequestHandler<CreateEventRequest, C
         }
 
         Family family = familyDao.getFamily(requestFamilyId);
-        List<Event> familyEvents = family.getFamilyEvents();
+        List<Event> familyEvents = family.getEvents();
 
         Event eventToCreate = new Event();
-        eventToCreate.setEventId(IdGenerator.generateId());
-        eventToCreate.setEventOwnerId(requestOwnerId);
-        eventToCreate.setEventType(requestType);
+        eventToCreate.setId(TouchBaseIdGenerator.generateId());
+        eventToCreate.setOwnerId(requestOwnerId);
+        eventToCreate.setType(requestType);
         eventToCreate.setEventDate(requestDate);
         eventToCreate.setEventStartMeridian(requestStartMeridian);
         eventToCreate.setEventEndMeridian(requestEndMeridian);
         eventToCreate.setEventStartTime(requestStartTime);
         eventToCreate.setEventEndTime(requestEndTime);
 
-        Set<String> eventAttendingMembers = new HashSet<>();
+        List<String> eventAttendingMembers = new ArrayList<>();
 
 
         if (requestAttendingMembers != null) {
@@ -82,15 +81,15 @@ public class CreateEventActivity implements RequestHandler<CreateEventRequest, C
             }
         }
 
-        eventToCreate.setEventAttendingMemberNames(eventAttendingMembers);
+        eventToCreate.setAttendingMemberNames(eventAttendingMembers);
 
-        eventToCreate.setEventDescription(requestDescription);
+        eventToCreate.setDescription(requestDescription);
 
         familyEvents.add(EventInserter.insertEvent(familyEvents, requestDate, requestStartTime,
             requestStartMeridian), eventToCreate);
 
 
-        family.setFamilyEvents(familyEvents);
+        family.setEvents(familyEvents);
 
         familyDao.save(family);
         FamilyModel familyModel = ModelConverter.toFamilyModel(family);

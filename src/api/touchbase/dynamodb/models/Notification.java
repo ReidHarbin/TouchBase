@@ -1,40 +1,62 @@
 package api.touchbase.dynamodb.models;
 
 public class Notification {
-    private String notificationHeadline;
-    private String notificationDescription;
-    private String notificationSenderName;
-    private String notificationDate;
+    private String headline;
+    private String description;
+    private String senderName;
+    private String date;
 
-    public String getNotificationHeadline() {
-        return notificationHeadline;
+    private Notification(Builder builder) {
+        this.headline = builder.headline;
+        this.description = builder.description;
+        this.senderName = builder.senderName;
+        this.date = builder.date;
     }
 
-    public void setNotificationHeadline(String notificationHeadline) {
-        this.notificationHeadline = notificationHeadline;
+    public String getHeadline() {
+        return headline;
     }
 
-    public String getNotificationDescription() {
-        return notificationDescription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setNotificationDescription(String notificationDescription) {
-        this.notificationDescription = notificationDescription;
+    public String getSenderName() {
+        return senderName;
     }
 
-    public String getNotificationSenderName() {
-        return notificationSenderName;
+    public String getDate() {
+        return date;
     }
 
-    public void setNotificationSenderName(String notificationSenderName) {
-        this.notificationSenderName = notificationSenderName;
-    }
+    public static class Builder {
+        private String headline;
+        private String description;
+        private String senderName;
+        private String date;
 
-    public String getNotificationDate() {
-        return notificationDate;
-    }
+        public Builder withHeadline(String headline) {
+            this.headline = headline;
+            return this;
+        }
 
-    public void setNotificationDate(String notificationDate) {
-        this.notificationDate = notificationDate;
+        public Builder withDescription(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public Builder withSenderName(String senderName) {
+            this.senderName = senderName;
+            return this;
+        }
+
+        public Builder withDate(String date) {
+            this.date = date;
+            return this;
+        }
+
+        public Notification build() {
+            return new Notification(this);
+        }
     }
 }

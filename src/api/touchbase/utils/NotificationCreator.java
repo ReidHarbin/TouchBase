@@ -13,54 +13,44 @@ public class NotificationCreator {
     }
 
     public Notification newFamilyMemberNotification(String newMemberName) {
-        Notification notification = new Notification();
-        LocalDate date = LocalDate.now();
-        int year = date.getYear();
-        int month = date.getMonthValue();
-        int day = date.getDayOfMonth();
-
-        notification.setNotificationHeadline("NEW FAMILY MEMBER!");
-        notification.setNotificationDescription(String.format("%s has joined your family!", newMemberName));
-        notification.setNotificationSenderName(newMemberName);
-        notification.setNotificationDate(month +"/" + day + "/" + year);
-
-        return notification;
+        return new Notification.Builder()
+                .withHeadline("NEW FAMILY MEMBER!")
+                .withDescription(String.format("%s has joined your family!", newMemberName))
+                .withSenderName(newMemberName)
+                .withDate(dateConverter.convert(LocalDate.now()))
+                .build();
     }
 
-    public Notification newMemberNotification() {
-        Notification welcomeNotification = new Notification();
-        welcomeNotification.setNotificationDate(dateConverter.convert(LocalDate.now()));
-        welcomeNotification.setNotificationHeadline("Welcome!");
-        welcomeNotification.setNotificationDescription("Welcome to TouchBase! No matter how far from home, you'll" +
-                                                       " always be able to touchbase!");
-        welcomeNotification.setNotificationSenderName("TouchBase");
-
-        return welcomeNotification;
+    public Notification touchbaseNewMemberNotification() {
+        return new Notification.Builder()
+                .withHeadline("Welcome!")
+                .withDescription("Welcome to TouchBase! No matter how far from home, you'll always be able to touchbase!")
+                .withSenderName("TouchBase")
+                .withDate(dateConverter.convert(LocalDate.now()))
+                .build();
     }
 
     public Notification addedToEventNotification(String eventType, String eventDescription, String senderName) {
-        Notification inviteToEventNotification = new Notification();
-        inviteToEventNotification.setNotificationDate(dateConverter.convert(LocalDate.now()));
-        inviteToEventNotification.setNotificationHeadline("SENDER NAME ADDED YOU TO AN EVENT");
-        inviteToEventNotification.setNotificationDescription(eventDescription);
-        inviteToEventNotification.setNotificationSenderName(senderName);
-
-        return inviteToEventNotification;
+        return new Notification.Builder()
+                .withHeadline("SENDER NAME ADDED YOU TO AN EVENT")
+                .withDescription(eventDescription)
+                .withSenderName(senderName)
+                .withDate(dateConverter.convert(LocalDate.now()))
+                .build();
     }
 
     public Notification familyMemberJoinedEventNotification(Event event, String senderName) {
         LocalDate eventDate = event.getEventDate();
         int year = eventDate.getYear();
-        int month = eventDate.getDayOfMonth();
+        int month = eventDate.getMonthValue();
         int day = eventDate.getDayOfMonth();
 
-        Notification joinedNotification = new Notification();
-        joinedNotification.setNotificationDate(dateConverter.convert(LocalDate.now()));
-        joinedNotification.setNotificationHeadline(senderName + " Has Joined Your Event");
-        joinedNotification.setNotificationDescription("The event is for " + event.getEventType() + " on " +
-                month +"/" + day + "/" + year);
-        joinedNotification.setNotificationSenderName(senderName);
-
-        return joinedNotification;
+        return new Notification.Builder()
+                .withHeadline(senderName + " Has Joined Your Event")
+                .withDescription("The event is for " + event.getType() + " on " + month + "/" + day + "/" + year)
+                .withSenderName(senderName)
+                .withDate(dateConverter.convert(LocalDate.now()))
+                .build();
     }
+
 }

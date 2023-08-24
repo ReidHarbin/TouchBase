@@ -2,7 +2,6 @@ package api.touchbase.activity.family;
 
 import api.touchbase.converters.ModelConverter;
 import api.touchbase.dynamodb.FamilyDao;
-import api.touchbase.dynamodb.models.Event;
 import api.touchbase.dynamodb.models.Family;
 import api.touchbase.models.objects.EventModel;
 import api.touchbase.models.requests.family.GetEventsRequest;
@@ -27,7 +26,7 @@ public class GetEventsActivity implements RequestHandler<GetEventsRequest, GetEv
         String requestFamilyId = getEventsRequest.getFamilyId();
         Family family = familyDao.getFamily(requestFamilyId);
         List<EventModel> eventModels = new ArrayList<>();
-        family.getFamilyEvents().forEach((e) -> eventModels.add(ModelConverter.toEventModel(e)));
+        family.getEvents().forEach((e) -> eventModels.add(ModelConverter.toEventModel(e)));
 
         return GetEventsResult.builder().withFamilyEvents(eventModels).build();
     }

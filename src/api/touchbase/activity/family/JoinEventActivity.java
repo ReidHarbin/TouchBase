@@ -42,16 +42,16 @@ public class JoinEventActivity implements RequestHandler<JoinEventRequest, JoinE
         Family family = familyDao.getFamily(requestFamilyId);
         Member member = memberDao.getMember(requestMemberId);
 
-        List<Event> familyEvents = family.getFamilyEvents();
-        Set<String> familyMemberNames = family.getFamilyMemberNamesToMemberIds().keySet();
+        List<Event> familyEvents = family.getEvents();
+        Set<String> familyMemberNames = family.getMemberNamesToMemberIds().keySet();
 
-        if (!familyMemberNames.contains(member.getMemberName())) {
+        if (!familyMemberNames.contains(member.getName())) {
             throw new MemberNotFoundException(String.format("The member provided is not part of the provided family"));
         }
 
         Event eventToJoin = null;
         for (Event e : familyEvents) {
-            if (e.getEventId().equals(requestEventId)) {
+            if (e.getId().equals(requestEventId)) {
                 eventToJoin = e;
             }
         }
@@ -59,12 +59,12 @@ public class JoinEventActivity implements RequestHandler<JoinEventRequest, JoinE
             throw new EventNotFoundException(String.format("There is no event with the Id {%s}", requestEventId));
         }
 
-        if (eventToJoin.getEventAttendingMemberNames().contains(member.getMemberName())) {
+        if (eventToJoin.getAttendingMemberNames().contains(member.getName())) {
             throw new InvalidInputException("Cannot join an event that you have already joined");
         }
 
 
-        Set<String> attendingMemberNames = eventToJoin.getEventAttendingMemberNames();
+        List<String> attendingMemberNames = eventToJoin.getAttendingMemberNames();
 
 
         NotificationCreator notificationCreator = new NotificationCreator();
@@ -72,21 +72,21 @@ public class JoinEventActivity implements RequestHandler<JoinEventRequest, JoinE
 
 
         for (String name : attendingMemberNames) {
-            String familyMemberId = family.getFamilyMemberNamesToMemberIds().get(name);
+            String familyMemberId = family.getMemberNamesToMemberIds().get(name);
             Member memberToNotify = memberDao.getMember(familyMemberId);
             List<Notification> memberToNotifyNotifications = memberToNotify.getMemberNotifications();
             memberToNotifyNotifications.add(0, notificationCreator.familyMemberJoinedEventNotification(
-                    eventToJoin, member.getMemberName()));
+                    eventToJoin, member.getName()));
 
             memberToNotify.setMemberNotifications(memberToNotifyNotifications);
             memberDao.saveMember(memberToNotify);
         }
 
-        attendingMemberNames.add(member.getMemberName());
-        eventToJoin.setEventAttendingMemberNames(attendingMemberNames);
+        attendingMemberNames.add(member.getName());
+        eventToJoin.setAttendingMemberNames(attendingMemberNames);
 
         List<EventModel> eventModels = new ArrayList<>();
-        family.getFamilyEvents().forEach(event -> eventModels.add(ModelConverter.toEventModel(event)));
+        family.getEvents().forEach(event -> eventModels.add(ModelConverter.toEventModel(event)));
 
         familyDao.save(family);
 

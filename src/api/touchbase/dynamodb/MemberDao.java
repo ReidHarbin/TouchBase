@@ -19,13 +19,11 @@ public class MemberDao {
         this.mapper = mapper;
     }
 
-    public Member getMember(String memberId) {
-        Member member = this.mapper.load(Member.class, memberId);
-
+    public Member getMember(String id) {
+        Member member = this.mapper.load(Member.class, id);
         if (member == null) {
-            throw new MemberNotFoundException(String.format("Could not find member for memberId { %s }", memberId));
+            throw new MemberNotFoundException(String.format("Could not find member for id { %s }", id));
         }
-
         return member;
     }
 
@@ -38,23 +36,30 @@ public class MemberDao {
         mapper.delete(memberToDelete);
     }
 
-    public PaginatedQueryList<Member> queryMemberNames(String memberName) {
+    public PaginatedQueryList<Member> queryMemberNames(String name) {
         Map<String, AttributeValue> valueMap = new HashMap<>();
-        valueMap.put(":memberName", new AttributeValue().withS(memberName));
-
+        valueMap.put(":name", new AttributeValue().withS(name));
         DynamoDBQueryExpression<Member> queryExpression = new DynamoDBQueryExpression<Member>()
                 .withIndexName("MemberNameIndex")
                 .withConsistentRead(false)
-                .withKeyConditionExpression("memberName = :memberName")
+                .withKeyConditionExpression("name = :name")
                 .withExpressionAttributeValues(valueMap);
 
         PaginatedQueryList<Member> memberPaginatedQueryList = mapper.query(Member.class, queryExpression);
-
         if (memberPaginatedQueryList == null || memberPaginatedQueryList.isEmpty()) {
-            throw new MemberNotFoundException(String.format("Could not find account with username %s", memberName));
+            throw new MemberNotFoundException(String.format("Could not find account with username %s", name));
         }
 
         return memberPaginatedQueryList;
+    }
+
+    public boolean usernameExists(String name) {
+        try {
+            this.queryMemberNames(name);
+            return true;
+        } catch (MemberNotFoundException e) {
+            return false;
+        }
     }
 
 }

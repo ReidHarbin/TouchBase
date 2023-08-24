@@ -9,7 +9,7 @@ import api.touchbase.exceptions.*;
 import api.touchbase.models.objects.FamilyModel;
 import api.touchbase.models.requests.family.CreateFamilyRequest;
 import api.touchbase.models.results.family.CreateFamilyResult;
-import api.touchbase.utils.IdGenerator;
+import api.touchbase.utils.TouchBaseIdGenerator;
 import api.touchbase.utils.InputStringValidator;
 import api.touchbase.utils.TouchBasePasswordAuthentication;
 import com.amazonaws.services.lambda.runtime.Context;
@@ -33,9 +33,10 @@ public class CreateFamilyActivity implements RequestHandler<CreateFamilyRequest,
         String requestPassword = createFamilyRequest.getFamilyPassword();
         String requestName = createFamilyRequest.getFamilyName();
         String requestCreatorId = createFamilyRequest.getFamilyCreatorId();
+
         Member creator = memberDao.getMember(requestCreatorId);
 
-        if (creator.getMemberFamilyId() != null) {
+        if (creator.getFamilyId() != null) {
             throw new MemberHasFamilyException("You need to leave your current family before you can create a new one");
         }
 
@@ -55,20 +56,20 @@ public class CreateFamilyActivity implements RequestHandler<CreateFamilyRequest,
 
         } catch (FamilyNotFoundException e) {
             Map<String, String> familyMemberNamesToMemberIds = new HashMap<>();
-            familyMemberNamesToMemberIds.put(creator.getMemberName(), requestCreatorId);
+            familyMemberNamesToMemberIds.put(creator.getName(), requestCreatorId);
 
             String passwordSalt = TouchBasePasswordAuthentication.getRandomSalt();
             String hashedPassword = TouchBasePasswordAuthentication.hashPassword(passwordSalt.concat(requestPassword));
 
             Family familyToCreate = new Family();
-            familyToCreate.setFamilyId(IdGenerator.generateId());
-            familyToCreate.setFamilyName(requestName);
-            familyToCreate.setFamilyPassword(hashedPassword);
-            familyToCreate.setFamilyPasswordSalt(passwordSalt);
-            familyToCreate.setFamilyMemberNamesToMemberIds(familyMemberNamesToMemberIds);
-            familyToCreate.setFamilyEvents(new ArrayList<>());
+            familyToCreate.setId(TouchBaseIdGenerator.generateId());
+            familyToCreate.setName(requestName);
+            familyToCreate.setPassword(hashedPassword);
+            familyToCreate.setSalt(passwordSalt);
+            familyToCreate.setMemberNamesToMemberIds(familyMemberNamesToMemberIds);
+            familyToCreate.setEvents(new ArrayList<>());
 
-            creator.setMemberFamilyId(familyToCreate.getFamilyId());
+            creator.setFamilyId(familyToCreate.getId());
 
             memberDao.saveMember(creator);
             familyDao.save(familyToCreate);

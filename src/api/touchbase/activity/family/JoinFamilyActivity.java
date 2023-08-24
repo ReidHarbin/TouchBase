@@ -49,21 +49,21 @@ public class JoinFamilyActivity implements RequestHandler<JoinFamilyRequest, Joi
             throw new InvalidInputException("You must provide a a family name");
         }
 
-        if (member.getMemberFamilyId() != null) {
+        if (member.getFamilyId() != null) {
             throw new MemberHasFamilyException("You must leave your current family before you can join a new one");
         }
 
         Family family = familyDao.queryFamilyNames(requestFamilyName).get(0);
 
-        if (!TouchBasePasswordAuthentication.isMatchingPassword(family.getFamilyPasswordSalt(),
-                requestFamilyPassword, family.getFamilyPassword())) {
+        if (!TouchBasePasswordAuthentication.isMatchingPassword(family.getSalt(),
+                requestFamilyPassword, family.getPassword())) {
             throw new InvalidPasswordException("Incorrect password");
         }
 
-        member.setMemberFamilyId(family.getFamilyId());
+        member.setFamilyId(family.getId());
         memberDao.saveMember(member);
 
-        Map<String, String> memberNamesToIds = family.getFamilyMemberNamesToMemberIds();
+        Map<String, String> memberNamesToIds = family.getMemberNamesToMemberIds();
         Set<String> memberNames = memberNamesToIds.keySet();
 
         for(String name : memberNames) {
@@ -75,15 +75,15 @@ public class JoinFamilyActivity implements RequestHandler<JoinFamilyRequest, Joi
 
             familyMemberNotifications.add(0,
                     new NotificationCreator()
-                    .newFamilyMemberNotification(member.getMemberName()));
+                    .newFamilyMemberNotification(member.getName()));
 
             memberToNotify.setMemberNotifications(familyMemberNotifications);
 
             memberDao.saveMember(memberToNotify);
         }
 
-        memberNamesToIds.put(member.getMemberName(), requestMemberId);
-        family.setFamilyMemberNamesToMemberIds(memberNamesToIds);
+        memberNamesToIds.put(member.getName(), requestMemberId);
+        family.setMemberNamesToMemberIds(memberNamesToIds);
 
         familyDao.save(family);
         FamilyModel familyModel = ModelConverter.toFamilyModel(family);
