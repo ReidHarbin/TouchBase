@@ -1,7 +1,6 @@
 package api.touchbase.dynamodb;
 
 import api.touchbase.dynamodb.models.Family;
-import api.touchbase.dynamodb.models.Member;
 import api.touchbase.exceptions.FamilyNotFoundException;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
@@ -36,14 +35,15 @@ public class FamilyDao {
         return family;
     }
 
-    public PaginatedQueryList<Family> queryFamilyNames(String name) {
+    public PaginatedQueryList<Family> queryFamiliesForJoining(String name, String accessCode) {
         Map<String, AttributeValue> valueMap = new HashMap<>();
         valueMap.put(":name", new AttributeValue().withS(name));
+        valueMap.put(":accessCode", new AttributeValue().withS(accessCode));
 
         DynamoDBQueryExpression<Family> queryExpression = new DynamoDBQueryExpression<Family>()
             .withIndexName("FamilyNameIndex")
             .withConsistentRead(false)
-            .withKeyConditionExpression("name = :name")
+            .withKeyConditionExpression("name = :name AND accessCode = :accessCode")
             .withExpressionAttributeValues(valueMap);
 
         PaginatedQueryList<Family> familyPaginatedQueryList = mapper.query(Family.class, queryExpression);

@@ -38,12 +38,8 @@ public class DeleteMemberNotificationActivity implements RequestHandler<DeleteMe
         memberNotifications.remove(indexToRemove);
         memberDao.saveMember(member);
 
-        List<Notification> notifications = member.getMemberNotifications();
         List<NotificationModel> notificationModels = new ArrayList<>();
-
-        for (Notification n : notifications) {
-            notificationModels.add(ModelConverter.toNotificationModel(n));
-        }
+        member.getMemberNotifications().forEach(n -> notificationModels.add(ModelConverter.toNotificationModel(n)));
 
         return DeleteMemberNotificationResult.builder()
                 .withNotifications(notificationModels)

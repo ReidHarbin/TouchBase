@@ -33,12 +33,8 @@ public class GetMemberNotificationsActivity implements RequestHandler<GetMemberN
         String requestMemberId = getMemberNotificationsRequest.getMemberId();
         Member member = memberDao.getMember(requestMemberId);
 
-        List<Notification> notifications = member.getMemberNotifications();
         List<NotificationModel> notificationModels = new ArrayList<>();
-
-        for (Notification n : notifications) {
-            notificationModels.add(ModelConverter.toNotificationModel(n));
-        }
+        member.getMemberNotifications().forEach(n -> notificationModels.add(ModelConverter.toNotificationModel(n)));
 
         return GetMemberNotificationsResult.builder()
                 .withNotifications(notificationModels)

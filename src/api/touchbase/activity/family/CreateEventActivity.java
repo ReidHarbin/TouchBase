@@ -54,7 +54,6 @@ public class CreateEventActivity implements RequestHandler<CreateEventRequest, C
         if (requestOwnerId == null) {
             throw new InvalidInputException("Request ownerId cannot be null");
         }
-
         if (requestFamilyId == null) {
             throw new InvalidInputException("FamilyId cannot be null");
         }
@@ -76,9 +75,7 @@ public class CreateEventActivity implements RequestHandler<CreateEventRequest, C
 
 
         if (requestAttendingMembers != null) {
-            for (String m : requestAttendingMembers) {
-                eventAttendingMembers.add(m);
-            }
+            eventAttendingMembers.addAll(requestAttendingMembers);
         }
 
         eventToCreate.setAttendingMemberNames(eventAttendingMembers);

@@ -3,22 +3,19 @@ package api.touchbase.models.requests.family;
 public class CreateFamilyRequest {
     private String familyCreatorId;
     private String familyName;
-    private String familyPassword;
 
     public CreateFamilyRequest() {
 
     }
 
-    public CreateFamilyRequest(String familyCreatorId, String familyName, String familyPassword) {
+    public CreateFamilyRequest(String familyCreatorId, String familyName) {
         this.familyCreatorId = familyCreatorId;
         this.familyName = familyName;
-        this.familyPassword = familyPassword;
     }
 
     public CreateFamilyRequest(Builder builder) {
         this.familyCreatorId = builder.familyCreatorId;
         this.familyName = builder.familyName;
-        this.familyPassword = builder.familyPassword;
     }
 
     public Builder builder() {
@@ -39,14 +36,6 @@ public class CreateFamilyRequest {
 
     public void setFamilyName(String familyName) {
         this.familyName = familyName;
-    }
-
-    public String getFamilyPassword() {
-        return familyPassword;
-    }
-
-    public void setFamilyPassword(String familyPassword) {
-        this.familyPassword = familyPassword;
     }
 
     public static final class Builder {

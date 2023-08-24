@@ -38,7 +38,6 @@ public class DeleteMemberActivity implements RequestHandler<DeleteMemberRequest,
 
         memberDao.deleteMember(member);
 
-
         return DeleteMemberResult.builder()
                 .withResponseMessage("You have successfully deleted you account.")
                 .build();

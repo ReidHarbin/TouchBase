@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class ModelConverter {
     private final Logger log = LogManager.getLogger();
@@ -27,16 +26,8 @@ public class ModelConverter {
 
     public static MemberModel toMemberModel(Member member) {
         List<NotificationModel> notificationModels = new ArrayList<>();
-
         if (member.getMemberNotifications() != null) {
-            for (Notification n : member.getMemberNotifications()) {
-                notificationModels.add(
-                        NotificationModel.builder()
-                                .withDate(n.getDate())
-                                .withDescription(n.getDescription())
-                                .withHeadline(n.getHeadline())
-                                .withSenderName(member.getName()).build());
-            }
+            member.getMemberNotifications().forEach(n -> notificationModels.add(toNotificationModel(n)));
         }
 
         return MemberModel.builder()
@@ -51,7 +42,7 @@ public class ModelConverter {
         return FamilyModel.builder()
                 .withId(family.getId())
                 .withName(family.getName())
-                .withMemberNames(new ArrayList<>(family.getMemberNamesToMemberIds().keySet()))
+                .withMemberNames(new ArrayList<>(family.getNamesToMemberIds().keySet()))
                 .build();
     }
 

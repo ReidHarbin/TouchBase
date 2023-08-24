@@ -43,7 +43,7 @@ public class JoinEventActivity implements RequestHandler<JoinEventRequest, JoinE
         Member member = memberDao.getMember(requestMemberId);
 
         List<Event> familyEvents = family.getEvents();
-        Set<String> familyMemberNames = family.getMemberNamesToMemberIds().keySet();
+        Set<String> familyMemberNames = family.getNamesToMemberIds().keySet();
 
         if (!familyMemberNames.contains(member.getName())) {
             throw new MemberNotFoundException(String.format("The member provided is not part of the provided family"));
@@ -72,7 +72,7 @@ public class JoinEventActivity implements RequestHandler<JoinEventRequest, JoinE
 
 
         for (String name : attendingMemberNames) {
-            String familyMemberId = family.getMemberNamesToMemberIds().get(name);
+            String familyMemberId = family.getNamesToMemberIds().get(name);
             Member memberToNotify = memberDao.getMember(familyMemberId);
             List<Notification> memberToNotifyNotifications = memberToNotify.getMemberNotifications();
             memberToNotifyNotifications.add(0, notificationCreator.familyMemberJoinedEventNotification(

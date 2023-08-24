@@ -11,12 +11,11 @@ import java.util.Map;
 public class Family {
     private String id;
     private String name;
-    private String password;
-    private String salt;
+    private String accessCode;
     private List<Event> events;
     private Map<String, String> memberNamesToMemberIds;
 
-    @DynamoDBHashKey(attributeName = "familyId")
+    @DynamoDBHashKey(attributeName = "id")
     public String getId() {
         return id;
     }
@@ -25,7 +24,7 @@ public class Family {
         this.id = id;
     }
 
-    @DynamoDBIndexHashKey(globalSecondaryIndexName = "FamilyNameIndex", attributeName = "familyName")
+    @DynamoDBIndexHashKey(globalSecondaryIndexName = "FamilyNameIndex", attributeName = "name")
     public String getName() {
         return name;
     }
@@ -34,22 +33,13 @@ public class Family {
         this.name = name;
     }
 
-    @DynamoDBAttribute(attributeName = "familyPassword")
-    public String getPassword() {
-        return password;
+    @DynamoDBIndexRangeKey(attributeName = "accessCode")
+    public String getAccessCode() {
+        return accessCode;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    @DynamoDBAttribute(attributeName = "familyPasswordSalt")
-    public String getSalt() {
-        return salt;
-    }
-
-    public void setSalt(String salt) {
-        this.salt = salt;
+    public void setAccessCode(String accessCode) {
+        this.accessCode = accessCode;
     }
 
     @DynamoDBTypeConverted(converter = EventsListConverter.class)
@@ -63,12 +53,12 @@ public class Family {
     }
 
     @DynamoDBTypeConverted(converter = MapConverter.class)
-    @DynamoDBAttribute(attributeName = "familyMemberNamesToMemberIds")
-    public Map<String, String> getMemberNamesToMemberIds() {
+    @DynamoDBAttribute(attributeName = "namesToMemberIds")
+    public Map<String, String> getNamesToMemberIds() {
         return memberNamesToMemberIds;
     }
 
-    public void setMemberNamesToMemberIds(Map<String, String> memberNamesToMemberIds) {
+    public void setNamesToMemberIds(Map<String, String> memberNamesToMemberIds) {
         this.memberNamesToMemberIds = memberNamesToMemberIds;
     }
 }

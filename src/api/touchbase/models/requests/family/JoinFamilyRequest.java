@@ -2,7 +2,7 @@ package api.touchbase.models.requests.family;
 
 public class JoinFamilyRequest {
     private String memberId;
-    private String familyPassword;
+    private String accessCode;
     private String familyName;
 
     public JoinFamilyRequest() {
@@ -12,13 +12,13 @@ public class JoinFamilyRequest {
     public JoinFamilyRequest(String familyName, String memberId, String familyPassword) {
         this.familyName = familyName;
         this.memberId = memberId;
-        this.familyPassword = familyPassword;
+        this.accessCode = familyPassword;
 
     }
 
     public JoinFamilyRequest(Builder builder) {
         this.memberId = builder.memberId;
-        this.familyPassword = builder.familyPassword;
+        this.accessCode = builder.familyPassword;
         this.familyName = builder.familyName;
     }
 
@@ -30,12 +30,12 @@ public class JoinFamilyRequest {
         this.memberId = memberId;
     }
 
-    public String getFamilyPassword() {
-        return familyPassword;
+    public String getAccessCode() {
+        return accessCode;
     }
 
-    public void setFamilyPassword(String familyPassword) {
-        this.familyPassword = familyPassword;
+    public void setAccessCode(String accessCode) {
+        this.accessCode = accessCode;
     }
 
     public String getFamilyName() {
