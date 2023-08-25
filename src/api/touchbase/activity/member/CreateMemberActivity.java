@@ -69,7 +69,7 @@ public class CreateMemberActivity implements RequestHandler<CreateMemberRequest,
                     String.format("The password provided {%s} did not follow the required format", password));
         }
         if (memberDao.usernameExists(name)) {
-            throw new UsernameTakenException("Username is taken");
+            throw new UsernameTakenException("Username is tak");
         }
 
         List<Notification> notifications = new ArrayList<>();

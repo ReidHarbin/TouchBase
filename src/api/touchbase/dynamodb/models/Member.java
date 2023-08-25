@@ -9,7 +9,7 @@ import java.util.List;
 public class Member {
     private String id;
     private String familyId;
-    private String name;
+    private String username;
     private String password;
     private String salt;
     private List<Notification> notifications;
@@ -34,11 +34,11 @@ public class Member {
 
     @DynamoDBIndexHashKey(globalSecondaryIndexName = "MemberNameIndex", attributeName = "name")
     public String getName() {
-        return name;
+        return username;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.username = name;
     }
 
     @DynamoDBAttribute(attributeName = "password")

@@ -38,11 +38,11 @@ public class MemberDao {
 
     public PaginatedQueryList<Member> queryMemberNames(String name) {
         Map<String, AttributeValue> valueMap = new HashMap<>();
-        valueMap.put(":name", new AttributeValue().withS(name));
+        valueMap.put(":username", new AttributeValue().withS(name));
         DynamoDBQueryExpression<Member> queryExpression = new DynamoDBQueryExpression<Member>()
-                .withIndexName("MemberNameIndex")
+                .withIndexName("MemberUsernameNameIndex")
                 .withConsistentRead(false)
-                .withKeyConditionExpression("name = :name")
+                .withKeyConditionExpression("username = :username")
                 .withExpressionAttributeValues(valueMap);
 
         PaginatedQueryList<Member> memberPaginatedQueryList = mapper.query(Member.class, queryExpression);
