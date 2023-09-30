@@ -13,7 +13,8 @@ public class NotificationCreator {
     }
 
     public Notification newFamilyMemberNotification(String newMemberName) {
-        return new Notification.Builder()
+        return Notification.builder()
+                .withId(TouchBaseIdGenerator.generateId())
                 .withHeadline("NEW FAMILY MEMBER!")
                 .withDescription(String.format("%s has joined your family!", newMemberName))
                 .withSenderName(newMemberName)
@@ -22,8 +23,9 @@ public class NotificationCreator {
     }
 
     public Notification touchbaseNewMemberNotification() {
-        return new Notification.Builder()
-                .withHeadline("Welcome!")
+        return Notification.builder()
+                .withId(TouchBaseIdGenerator.generateId())
+                .withHeadline("WELCOME!")
                 .withDescription("Welcome to TouchBase! No matter how far from home, you'll always be able to touchbase!")
                 .withSenderName("TouchBase")
                 .withDate(dateConverter.convert(LocalDate.now()))
@@ -31,8 +33,9 @@ public class NotificationCreator {
     }
 
     public Notification addedToEventNotification(String eventType, String eventDescription, String senderName) {
-        return new Notification.Builder()
-                .withHeadline("SENDER NAME ADDED YOU TO AN EVENT")
+        return Notification.builder()
+                .withId(TouchBaseIdGenerator.generateId())
+                .withHeadline(senderName.toUpperCase() + " ADDED YOU TO AN EVENT")
                 .withDescription(eventDescription)
                 .withSenderName(senderName)
                 .withDate(dateConverter.convert(LocalDate.now()))
@@ -45,8 +48,9 @@ public class NotificationCreator {
         int month = eventDate.getMonthValue();
         int day = eventDate.getDayOfMonth();
 
-        return new Notification.Builder()
-                .withHeadline(senderName + " Has Joined Your Event")
+        return Notification.builder()
+                .withId(TouchBaseIdGenerator.generateId())
+                .withHeadline(senderName.toUpperCase() + " HAS JOINED YOUR EVENT")
                 .withDescription("The event is for " + event.getType() + " on " + month + "/" + day + "/" + year)
                 .withSenderName(senderName)
                 .withDate(dateConverter.convert(LocalDate.now()))

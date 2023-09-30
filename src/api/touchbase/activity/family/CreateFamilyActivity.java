@@ -47,7 +47,6 @@ public class CreateFamilyActivity implements RequestHandler<CreateFamilyRequest,
         Map<String, String> memberNamesToMemberIds = new HashMap<>();
         memberNamesToMemberIds.put(creator.getName(), requestCreatorId);
 
-
         Family familyToCreate = new Family();
         familyToCreate.setId(TouchBaseIdGenerator.generateId());
         familyToCreate.setAccessCode(AccessCodeGenerator.generateAccessCode());
@@ -57,8 +56,8 @@ public class CreateFamilyActivity implements RequestHandler<CreateFamilyRequest,
 
         creator.setFamilyId(familyToCreate.getId());
 
-        memberDao.saveMember(creator);
         familyDao.save(familyToCreate);
+        memberDao.saveMember(creator);
 
         return CreateFamilyResult.builder()
                 .withFamilyModel(ModelConverter.toFamilyModel(familyToCreate))

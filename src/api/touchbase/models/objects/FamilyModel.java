@@ -7,6 +7,7 @@ import java.util.List;
 public class FamilyModel {
     private String id;
     private String name;
+    private String accessCode;
     private List<String> memberNames;
 
     public FamilyModel() {
@@ -17,27 +18,35 @@ public class FamilyModel {
         this.id = builder.id;
         this.name = builder.name;
         this.memberNames = builder.memberNames;
+        this.accessCode = builder.accessCode;
     }
 
     @Override
     public String toString() {
         return "FamilyModel{" +
-                "familyId='" + id + '\'' +
-                ", familyName='" + name + '\'' +
-                ", familyEventDescriptions=" + memberNames +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", accessCode='" + accessCode + '\'' +
+                ", memberNames=" + memberNames +
                 '}';
     }
+
     public static Builder builder() {
             return new Builder();
         }
 
     public static final class Builder {
         private String id;
+        private String accessCode;
         private String name;
         private List<String> memberNames;
 
         public Builder withId(String id) {
             this.id = id;
+            return this;
+        }
+        public Builder withAccessCode(String accessCode) {
+            this.accessCode = accessCode;
             return this;
         }
 

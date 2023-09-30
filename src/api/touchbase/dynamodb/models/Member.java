@@ -5,7 +5,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.*;
 
 import java.util.List;
 
-@DynamoDBTable(tableName = "touchbase_members")
+@DynamoDBTable(tableName = "touchbase-members")
 public class Member {
     private String id;
     private String familyId;
@@ -32,7 +32,7 @@ public class Member {
         this.familyId = familyId;
     }
 
-    @DynamoDBIndexHashKey(globalSecondaryIndexName = "MemberNameIndex", attributeName = "name")
+    @DynamoDBIndexHashKey(globalSecondaryIndexName = "MemberUsernameIndex", attributeName = "username")
     public String getName() {
         return username;
     }

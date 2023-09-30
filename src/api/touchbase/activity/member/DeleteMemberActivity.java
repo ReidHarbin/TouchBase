@@ -2,7 +2,6 @@ package api.touchbase.activity.member;
 
 import api.touchbase.dynamodb.MemberDao;
 import api.touchbase.dynamodb.models.Member;
-import api.touchbase.exceptions.InvalidInputException;
 import api.touchbase.exceptions.InvalidPasswordException;
 import api.touchbase.models.requests.member.DeleteMemberRequest;
 import api.touchbase.models.results.member.DeleteMemberResult;

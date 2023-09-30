@@ -23,8 +23,7 @@ public class GetEventsActivity implements RequestHandler<GetEventsRequest, GetEv
 
     @Override
     public GetEventsResult handleRequest(final GetEventsRequest getEventsRequest, Context context) {
-        String requestFamilyId = getEventsRequest.getFamilyId();
-        Family family = familyDao.getFamily(requestFamilyId);
+        Family family = familyDao.getFamily(getEventsRequest.getFamilyId());
         List<EventModel> eventModels = new ArrayList<>();
         family.getEvents().forEach((e) -> eventModels.add(ModelConverter.toEventModel(e)));
 

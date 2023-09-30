@@ -7,7 +7,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import java.util.List;
 import java.util.Map;
 
-@DynamoDBTable(tableName = "touchbase_families")
+@DynamoDBTable(tableName = "touchbase-families")
 public class Family {
     private String id;
     private String name;

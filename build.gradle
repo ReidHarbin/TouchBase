@@ -73,7 +73,13 @@ dependencies {
     // Added for authentication
     implementation 'de.mkammerer:argon2-jvm:2.11'
 
+
 }
+
+test {
+    useJUnitPlatform()
+}
+
 
 task buildZip(type: Zip) {
     from compileJava

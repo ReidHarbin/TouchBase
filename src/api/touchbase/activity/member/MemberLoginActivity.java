@@ -22,8 +22,8 @@ public class MemberLoginActivity implements RequestHandler<MemberLoginRequest, M
 
     @Override
     public MemberLoginResult handleRequest(final MemberLoginRequest memberLoginRequest, Context context) {
-        String providedName = memberLoginRequest.getMemberName();
-        String providedPassword = memberLoginRequest.getMemberPassword();
+        String providedName = memberLoginRequest.getName();
+        String providedPassword = memberLoginRequest.getPassword();
 
         if (providedName == null || providedName.isBlank()) {
             throw new InvalidInputException("You must provide a username");
@@ -33,14 +33,15 @@ public class MemberLoginActivity implements RequestHandler<MemberLoginRequest, M
         }
 
         Member member = memberDao.queryMemberNames(providedName).get(0);
-        if (!TouchBasePasswordAuthentication.isMatchingPassword(member.getSalt(),
-                providedPassword, member.getPassword())) {
+
+        if (!TouchBasePasswordAuthentication
+                .isMatchingPassword(member.getSalt(), providedPassword, member.getPassword())) {
             throw new InvalidPasswordException("Incorrect password");
         }
 
         return  MemberLoginResult.builder()
-                .withMemberId(member.getId())
-                .withMemberFamilyId(member.getFamilyId())
-                .build();
+                    .withMemberId(member.getId())
+                    .withMemberFamilyId(member.getFamilyId())
+                    .build();
     }
 }

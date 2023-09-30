@@ -18,7 +18,6 @@ import java.util.List;
 
 public class GetMemberNotificationsActivity implements RequestHandler<GetMemberNotificationsRequest, GetMemberNotificationsResult> {
     private final MemberDao memberDao;
-    private final Logger log = LogManager.getLogger();
 
     @Inject
     public GetMemberNotificationsActivity(MemberDao memberDao) {
@@ -28,10 +27,7 @@ public class GetMemberNotificationsActivity implements RequestHandler<GetMemberN
 
     @Override
     public GetMemberNotificationsResult handleRequest(final GetMemberNotificationsRequest getMemberNotificationsRequest, Context context) {
-        log.info("Received get notification request with id: " + getMemberNotificationsRequest.getMemberId());
-
-        String requestMemberId = getMemberNotificationsRequest.getMemberId();
-        Member member = memberDao.getMember(requestMemberId);
+        Member member = memberDao.getMember(getMemberNotificationsRequest.getMemberId());
 
         List<NotificationModel> notificationModels = new ArrayList<>();
         member.getMemberNotifications().forEach(n -> notificationModels.add(ModelConverter.toNotificationModel(n)));

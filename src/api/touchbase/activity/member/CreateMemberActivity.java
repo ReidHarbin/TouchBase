@@ -28,7 +28,6 @@ import java.util.List;
  * This API allows the user to create their Member profile
  */
 public class CreateMemberActivity implements RequestHandler<CreateMemberRequest, CreateMemberResult> {
-    private final Logger log = LogManager.getLogger();
     private final MemberDao memberDao;
     private NotificationCreator notificationCreator;
 
@@ -53,23 +52,17 @@ public class CreateMemberActivity implements RequestHandler<CreateMemberRequest,
      */
     @Override
     public CreateMemberResult handleRequest(final CreateMemberRequest createMemberRequest, Context context) {
-
-        log.info("Received CreateMemberRequest {}", createMemberRequest);
         String password = createMemberRequest.getPassword();
         String name = createMemberRequest.getName();
 
         if (name == null || name.isBlank()) {
             throw new InvalidInputException("You must provide a username");
         }
-        if (password == null || password.isBlank()) {
-            throw new InvalidInputException("You must provide a password");
-        }
         if (!InputStringValidator.isValidPassword(password)) {
-            throw new InvalidPasswordException(
-                    String.format("The password provided {%s} did not follow the required format", password));
+            throw new InvalidPasswordException("The password provided did not follow the required format");
         }
         if (memberDao.usernameExists(name)) {
-            throw new UsernameTakenException("Username is tak");
+            throw new UsernameTakenException("Username is taken");
         }
 
         List<Notification> notifications = new ArrayList<>();
@@ -78,7 +71,7 @@ public class CreateMemberActivity implements RequestHandler<CreateMemberRequest,
         Member memberToCreate = new Member();
         memberToCreate.setId(TouchBaseIdGenerator.generateId());
         memberToCreate.setName(name);
-        memberToCreate.setSalt(TouchBasePasswordAuthentication.getRandomSalt());
+        memberToCreate.setSalt(TouchBasePasswordAuthentication.generateRandomSalt());
         memberToCreate.setPassword(TouchBasePasswordAuthentication.hashPassword(memberToCreate.getSalt()).concat(password));
         memberToCreate.setMemberNotifications(notifications);
 
@@ -87,6 +80,5 @@ public class CreateMemberActivity implements RequestHandler<CreateMemberRequest,
         return CreateMemberResult.builder()
                 .withMember(ModelConverter.toMemberModel(memberToCreate))
                 .build();
-
     }
 }

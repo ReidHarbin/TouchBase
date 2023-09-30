@@ -53,30 +53,27 @@ public class JoinEventActivity implements RequestHandler<JoinEventRequest, JoinE
         for (Event e : familyEvents) {
             if (e.getId().equals(requestEventId)) {
                 eventToJoin = e;
+                break;
             }
         }
         if (eventToJoin == null) {
             throw new EventNotFoundException(String.format("There is no event with the Id {%s}", requestEventId));
         }
 
-        if (eventToJoin.getAttendingMemberNames().contains(member.getName())) {
+        List<String> attendingMemberNames = eventToJoin.getAttendingMemberNames();
+
+        if (attendingMemberNames.contains(member.getName())) {
             throw new InvalidInputException("Cannot join an event that you have already joined");
         }
 
-
-        List<String> attendingMemberNames = eventToJoin.getAttendingMemberNames();
-
-
         NotificationCreator notificationCreator = new NotificationCreator();
-
-
-
         for (String name : attendingMemberNames) {
             String familyMemberId = family.getNamesToMemberIds().get(name);
             Member memberToNotify = memberDao.getMember(familyMemberId);
             List<Notification> memberToNotifyNotifications = memberToNotify.getMemberNotifications();
-            memberToNotifyNotifications.add(0, notificationCreator.familyMemberJoinedEventNotification(
-                    eventToJoin, member.getName()));
+
+            memberToNotifyNotifications
+                    .add(0, notificationCreator.familyMemberJoinedEventNotification(eventToJoin, member.getName()));
 
             memberToNotify.setMemberNotifications(memberToNotifyNotifications);
             memberDao.saveMember(memberToNotify);

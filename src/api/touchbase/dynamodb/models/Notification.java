@@ -1,12 +1,14 @@
 package api.touchbase.dynamodb.models;
 
 public class Notification {
+    private String id;
     private String headline;
     private String description;
     private String senderName;
     private String date;
 
-    private Notification(Builder builder) {
+    public Notification(Builder builder) {
+        this.id = builder.id;
         this.headline = builder.headline;
         this.description = builder.description;
         this.senderName = builder.senderName;
@@ -14,19 +16,27 @@ public class Notification {
     }
 
     public String getHeadline() {
-        return headline;
+        return this.headline;
     }
 
     public String getDescription() {
-        return description;
+        return this.description;
     }
 
     public String getSenderName() {
-        return senderName;
+        return this.senderName;
     }
 
     public String getDate() {
-        return date;
+        return this.date;
+    }
+
+    public String getId() {
+        return this.id;
+    }
+
+    public static Builder builder() {
+        return new Builder();
     }
 
     public static class Builder {
@@ -34,6 +44,7 @@ public class Notification {
         private String description;
         private String senderName;
         private String date;
+        private String id;
 
         public Builder withHeadline(String headline) {
             this.headline = headline;
@@ -52,6 +63,10 @@ public class Notification {
 
         public Builder withDate(String date) {
             this.date = date;
+            return this;
+        }
+        public Builder withId(String id) {
+            this.id = id;
             return this;
         }
 

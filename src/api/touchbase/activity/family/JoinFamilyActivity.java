@@ -53,12 +53,15 @@ public class JoinFamilyActivity implements RequestHandler<JoinFamilyRequest, Joi
 
         Map<String, String> memberNamesToIds = family.getNamesToMemberIds();
 
-        for(String name : memberNamesToIds.keySet()) {
+        memberNamesToIds.keySet().stream().forEach(name -> {
             Member memberToNotify = memberDao.getMember(memberNamesToIds.get(name));
-            memberToNotify.getMemberNotifications().add(0,
-                    notificationCreator.newFamilyMemberNotification(member.getName()));
+
+            memberToNotify.getMemberNotifications()
+                    .add(0, notificationCreator.newFamilyMemberNotification(member.getName()));
+
             memberDao.saveMember(memberToNotify);
-        }
+        });
+
         memberNamesToIds.put(member.getName(), requestMemberId);
         family.setNamesToMemberIds(memberNamesToIds);
 

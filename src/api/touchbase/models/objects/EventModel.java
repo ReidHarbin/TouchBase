@@ -1,5 +1,6 @@
 package api.touchbase.models.objects;
 
+import java.util.List;
 import java.util.Set;
 
 public class EventModel {
@@ -10,7 +11,7 @@ public class EventModel {
     private String eventDate;
     private String eventStartTime;
     private String eventEndTime;
-    private Set<String> eventAttendingMemberNames;
+    private List<String> eventAttendingMemberNames;
 
     public EventModel() {
 
@@ -49,7 +50,7 @@ public class EventModel {
         private String eventDate;
         private String eventStartTime;
         private String eventEndTime;
-        private Set<String> eventAttendingMemberNames;
+        private List<String> eventAttendingMemberNames;
 
         public Builder withEventId(String eventId) {
             this.eventId = eventId;
@@ -72,7 +73,7 @@ public class EventModel {
             return this;
         }
 
-        public Builder withEventAttendingMemberNames(Set<String> eventFamilyMemberNames) {
+        public Builder withEventAttendingMemberNames(List<String> eventFamilyMemberNames) {
             this.eventAttendingMemberNames = eventFamilyMemberNames;
             return this;
         }

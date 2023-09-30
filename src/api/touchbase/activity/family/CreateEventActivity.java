@@ -51,12 +51,6 @@ public class CreateEventActivity implements RequestHandler<CreateEventRequest, C
         if (requestDate.isBefore(LocalDate.now())) {
             throw new InvalidInputException("Cannot set the event date to a day that has already passed");
         }
-        if (requestOwnerId == null) {
-            throw new InvalidInputException("Request ownerId cannot be null");
-        }
-        if (requestFamilyId == null) {
-            throw new InvalidInputException("FamilyId cannot be null");
-        }
 
         Family family = familyDao.getFamily(requestFamilyId);
         List<Event> familyEvents = family.getEvents();
@@ -72,27 +66,19 @@ public class CreateEventActivity implements RequestHandler<CreateEventRequest, C
         eventToCreate.setEventEndTime(requestEndTime);
 
         List<String> eventAttendingMembers = new ArrayList<>();
-
-
         if (requestAttendingMembers != null) {
             eventAttendingMembers.addAll(requestAttendingMembers);
         }
-
         eventToCreate.setAttendingMemberNames(eventAttendingMembers);
-
         eventToCreate.setDescription(requestDescription);
 
-        familyEvents.add(EventInserter.insertEvent(familyEvents, requestDate, requestStartTime,
-            requestStartMeridian), eventToCreate);
-
-
+        familyEvents.add(EventInserter.insertEvent(familyEvents, requestDate, requestStartTime, requestStartMeridian), eventToCreate);
         family.setEvents(familyEvents);
 
         familyDao.save(family);
-        FamilyModel familyModel = ModelConverter.toFamilyModel(family);
 
         return CreateEventResult.builder()
-                .withFamilyModel(familyModel)
+                .withFamilyModel(ModelConverter.toFamilyModel(family))
                 .build();
     }
 }

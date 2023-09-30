@@ -1,37 +1,37 @@
 package api.touchbase.models.requests.member;
 
 public class MemberLoginRequest {
-    private String memberName;
-    private String memberPassword;
+    private String name;
+    private String password;
 
     public MemberLoginRequest() {
 
     }
 
     public MemberLoginRequest(String memberName, String memberPassword) {
-        this.memberName = memberName;
-        this.memberPassword = memberPassword;
+        this.name = memberName;
+        this.password = memberPassword;
     }
 
     public MemberLoginRequest(Builder builder) {
-        this.memberName = builder.memberName;
-        this.memberPassword = builder.memberPassword;
+        this.name = builder.name;
+        this.password = builder.password;
     }
 
-    public String getMemberName() {
-        return memberName;
+    public String getName() {
+        return name;
     }
 
-    public void setMemberName(String memberName) {
-        this.memberName = memberName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getMemberPassword() {
-        return memberPassword;
+    public String getPassword() {
+        return password;
     }
 
-    public void setMemberPassword(String memberPassword) {
-        this.memberPassword = memberPassword;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 
@@ -40,16 +40,16 @@ public class MemberLoginRequest {
     }
 
     public static final class Builder {
-        private String memberName;
-        private String memberPassword;
+        private String name;
+        private String password;
 
-        public Builder withMemberName(String memberName) {
-            this.memberName = memberName;
+        public Builder withMemberName(String name) {
+            this.name = name;
             return this;
         }
 
-        public Builder withMemberPassword(String memberPassword) {
-            this.memberPassword = memberPassword;
+        public Builder withMemberPassword(String password) {
+            this.password = password;
             return this;
         }
 

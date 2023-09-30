@@ -9,21 +9,14 @@ public class InputStringValidator {
     private static final Pattern SPACE_CHARACTER_PATTERN = Pattern.compile("\\s");
 
     public static boolean isValidPassword(final String passwordToValidate) {
-
-        if (passwordToValidate == null || passwordToValidate.isBlank()) {
-            return false;
-        }
-
-        if (SPACE_CHARACTER_PATTERN.matcher(passwordToValidate).find()) {
-            return false;
-        }
-
-        if (!LOWERCASE_PATTERN.matcher(passwordToValidate).find() &&
-                !UPPERCASE_PATTERN.matcher(passwordToValidate).find() &&
-                !NUMBER_CHARACTER_PATTERN.matcher(passwordToValidate).find()) {
-            return false;
-        }
-
-        return true;
+        return (
+                (passwordToValidate != null &&
+                 !passwordToValidate.isBlank() &&
+                 passwordToValidate.length() >= 8) &&
+                 !SPACE_CHARACTER_PATTERN.matcher(passwordToValidate).find() &&
+                (LOWERCASE_PATTERN.matcher(passwordToValidate).find() &&
+                 UPPERCASE_PATTERN.matcher(passwordToValidate).find() &&
+                 NUMBER_CHARACTER_PATTERN.matcher(passwordToValidate).find())
+        );
     }
 }

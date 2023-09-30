@@ -20,11 +20,9 @@ public class FamilyDao {
     }
 
     public Family getFamily(String id) {
-
         Family family = mapper.load(Family.class, id);
-
         if (family == null) {
-            throw new FamilyNotFoundException(String.format("There is no family for the given id {%s}", id));
+            throw new FamilyNotFoundException("There is no family for the given family id.");
         }
 
         return family;
@@ -48,8 +46,8 @@ public class FamilyDao {
 
         PaginatedQueryList<Family> familyPaginatedQueryList = mapper.query(Family.class, queryExpression);
 
-        if (familyPaginatedQueryList == null ||familyPaginatedQueryList.isEmpty()) {
-            throw new FamilyNotFoundException("Password or Username is incorrect");
+        if (familyPaginatedQueryList == null || familyPaginatedQueryList.isEmpty()) {
+            throw new FamilyNotFoundException("Access code or family name is incorrect.");
         }
 
         return familyPaginatedQueryList;

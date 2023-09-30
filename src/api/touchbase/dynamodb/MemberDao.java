@@ -22,7 +22,7 @@ public class MemberDao {
     public Member getMember(String id) {
         Member member = this.mapper.load(Member.class, id);
         if (member == null) {
-            throw new MemberNotFoundException(String.format("Could not find member for id { %s }", id));
+            throw new MemberNotFoundException("There is no member for the given id");
         }
         return member;
     }
@@ -40,14 +40,14 @@ public class MemberDao {
         Map<String, AttributeValue> valueMap = new HashMap<>();
         valueMap.put(":username", new AttributeValue().withS(name));
         DynamoDBQueryExpression<Member> queryExpression = new DynamoDBQueryExpression<Member>()
-                .withIndexName("MemberUsernameNameIndex")
+                .withIndexName("MemberUsernameIndex")
                 .withConsistentRead(false)
                 .withKeyConditionExpression("username = :username")
                 .withExpressionAttributeValues(valueMap);
 
         PaginatedQueryList<Member> memberPaginatedQueryList = mapper.query(Member.class, queryExpression);
         if (memberPaginatedQueryList == null || memberPaginatedQueryList.isEmpty()) {
-            throw new MemberNotFoundException(String.format("Could not find account with username %s", name));
+            throw new MemberNotFoundException("There is no account associated with the given username");
         }
 
         return memberPaginatedQueryList;

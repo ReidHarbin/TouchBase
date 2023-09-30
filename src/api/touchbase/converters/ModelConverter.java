@@ -19,16 +19,13 @@ import java.util.List;
 import java.util.Set;
 
 public class ModelConverter {
-    private final Logger log = LogManager.getLogger();
     public ModelConverter() {
 
     }
 
     public static MemberModel toMemberModel(Member member) {
         List<NotificationModel> notificationModels = new ArrayList<>();
-        if (member.getMemberNotifications() != null) {
-            member.getMemberNotifications().forEach(n -> notificationModels.add(toNotificationModel(n)));
-        }
+        member.getMemberNotifications().forEach(n -> notificationModels.add(toNotificationModel(n)));
 
         return MemberModel.builder()
                 .withId(member.getId())
@@ -42,6 +39,7 @@ public class ModelConverter {
         return FamilyModel.builder()
                 .withId(family.getId())
                 .withName(family.getName())
+                .withAccessCode(family.getAccessCode())
                 .withMemberNames(new ArrayList<>(family.getNamesToMemberIds().keySet()))
                 .build();
     }
@@ -49,6 +47,7 @@ public class ModelConverter {
 
     public static NotificationModel toNotificationModel(Notification notification) {
         return NotificationModel.builder()
+                .withId(notification.getId())
                 .withHeadline(notification.getHeadline())
                 .withDescription(notification.getDescription())
                 .withSenderName(notification.getSenderName())
@@ -62,41 +61,29 @@ public class ModelConverter {
         LocalTime eventStartTime = event.getEventStartTime();
         LocalTime eventEndTime = event.getEventEndTime();
 
-        String startMins = eventStartTime.getMinute() < 10 ? ("0" + eventStartTime.getMinute()) :
-                                                              Integer.toString(eventStartTime.getMinute());
-        String endMins = eventEndTime.getMinute() < 10 ? ("0" + eventEndTime.getMinute()) :
-                                                          Integer.toString(eventEndTime.getMinute());
+        String startMins = eventStartTime.getMinute() < 10 ?
+                ("0" + eventStartTime.getMinute()) : Integer.toString(eventStartTime.getMinute());
+        String endMins = eventEndTime.getMinute() < 10 ?
+                ("0" + eventEndTime.getMinute()) : Integer.toString(eventEndTime.getMinute());
 
-        String eventDateString = eventDate.getMonthValue() + "/" +
-                                 eventDate.getDayOfMonth() + "/" +
-                                 eventDate.getYear();
+        String eventDateString =
+                eventDate.getMonthValue() + "/" + eventDate.getDayOfMonth() + "/" + eventDate.getYear();
 
-        String eventStartTimeString = eventStartTime.getHour() + ":" + startMins + " " +
-                event.getEventStartMeridian();
+        String eventStartTimeString =
+                eventStartTime.getHour() + ":" + startMins + " " + event.getEventStartMeridian();
 
-        String eventEndTimeString = eventEndTime.getHour() + ":" + endMins + " " +
-               event.getEventEndMeridian();
-
-
-        String eventId = event.getId();
-        String eventOwnerId = event.getOwnerId();
-        String eventDescription = event.getDescription();
-        String eventType = event.getType();
-        Set<String> eventAttendingMemberIds = new HashSet<>();
-
-        for (String id : event.getAttendingMemberNames()) {
-            eventAttendingMemberIds.add(id);
-        }
+        String eventEndTimeString =
+                eventEndTime.getHour() + ":" + endMins + " " + event.getEventEndMeridian();
 
         return EventModel.builder()
-                .withEventId(eventId)
-                .withOwnerId(eventOwnerId)
+                .withEventId(event.getId())
+                .withOwnerId(event.getOwnerId())
                 .withEventDate(eventDateString)
-                .withEventDescription(eventDescription)
-                .withEventType(eventType)
+                .withEventDescription(event.getDescription())
+                .withEventType(event.getType())
                 .withEventStartTime(eventStartTimeString)
                 .withEventEndTime(eventEndTimeString)
-                .withEventAttendingMemberNames(eventAttendingMemberIds)
+                .withEventAttendingMemberNames(event.getAttendingMemberNames())
                 .build();
     }
 

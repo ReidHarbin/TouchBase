@@ -12,7 +12,7 @@ public class TouchBasePasswordAuthentication {
     private static String SALT_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
     private static final int SALT_LENGTH = 18;
 
-    public static String getRandomSalt() {
+    public static String generateRandomSalt() {
         String salt = "";
         for (int i = 0; i < SALT_LENGTH; i++) {
             salt = salt.concat(Character.toString(SALT_CHARS.charAt(randomRangedIntValue(0, 34))));

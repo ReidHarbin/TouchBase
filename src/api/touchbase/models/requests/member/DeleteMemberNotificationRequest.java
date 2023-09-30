@@ -1,34 +1,34 @@
 package api.touchbase.models.requests.member;
 
 public class DeleteMemberNotificationRequest {
-    private String memberId;
+    private String id;
     private int memberNotificationIndex;
 
     // Constructors
     public DeleteMemberNotificationRequest() {
     }
 
-    public DeleteMemberNotificationRequest(String memberId, int memberNotificationIndex) {
-        this.memberId = memberId;
+    public DeleteMemberNotificationRequest(String id, int memberNotificationIndex) {
+        this.id = id;
         this.memberNotificationIndex = memberNotificationIndex;
     }
 
     public DeleteMemberNotificationRequest(Builder builder) {
-        this.memberId = builder.memberId;
+        this.id = builder.memberId;
         this.memberNotificationIndex = builder.memberNotificationIndex;
     }
 
     // Getters and Setters
-    public String getMemberId() {
-        return memberId;
+    public String getId() {
+        return id;
     }
 
     public int getMemberNotificationIndex() {
         return memberNotificationIndex;
     }
 
-    public void setMemberId(String memberId) {
-        this.memberId = memberId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public void setMemberNotificationIndex(int memberNotificationIndex) {
@@ -43,7 +43,7 @@ public class DeleteMemberNotificationRequest {
     @Override
     public String toString() {
         return "DeleteMemberNotificationRequest{" +
-                "memberId='" + memberId + '\'' +
+                "memberId='" + id + '\'' +
                 ", memberNotificationIndex=" + memberNotificationIndex +
                 '}';
     }
