@@ -6,7 +6,7 @@ This design document describes the API for Touchbase, a family event management 
 
 ## Architecture
 
-![Touchbase Architecture](TouchBase-Architecture.png)
+![Touchbase Architecture](src/resources/TouchBase-Architecture.png)
 
 ## TouchBase Implementation Notes
 
@@ -111,7 +111,7 @@ This design document describes the API for Touchbase, a family event management 
 
 ## Data Models
 
-![Data Models](Data-Models.png)
+![Data Models](src/resources/Data-Models.png)
 
 ### CreateMember:
 #### Request
