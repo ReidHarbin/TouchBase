@@ -8,15 +8,11 @@ import api.touchbase.models.objects.EventModel;
 import api.touchbase.models.objects.FamilyModel;
 import api.touchbase.models.objects.MemberModel;
 import api.touchbase.models.objects.NotificationModel;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class ModelConverter {
     public ModelConverter() {
@@ -36,11 +32,15 @@ public class ModelConverter {
     }
 
     public static FamilyModel toFamilyModel(Family family) {
+        List<String> memberNames = new ArrayList<>();
+        for (String name : family.getNamesToMemberIds().keySet()) {
+            memberNames.add(name);
+        }
         return FamilyModel.builder()
                 .withId(family.getId())
                 .withName(family.getName())
                 .withAccessCode(family.getAccessCode())
-                .withMemberNames(new ArrayList<>(family.getNamesToMemberIds().keySet()))
+                .withMemberNames(memberNames)
                 .build();
     }
 
@@ -57,9 +57,10 @@ public class ModelConverter {
 
 
     public static EventModel toEventModel(Event event) {
-        LocalDate eventDate = event.getEventDate();
-        LocalTime eventStartTime = event.getEventStartTime();
-        LocalTime eventEndTime = event.getEventEndTime();
+        System.out.println(event);
+        LocalDate eventDate = event.getDate();
+        LocalTime eventStartTime = event.getStartTime();
+        LocalTime eventEndTime = event.getEndTime();
 
         String startMins = eventStartTime.getMinute() < 10 ?
                 ("0" + eventStartTime.getMinute()) : Integer.toString(eventStartTime.getMinute());
@@ -70,20 +71,20 @@ public class ModelConverter {
                 eventDate.getMonthValue() + "/" + eventDate.getDayOfMonth() + "/" + eventDate.getYear();
 
         String eventStartTimeString =
-                eventStartTime.getHour() + ":" + startMins + " " + event.getEventStartMeridian();
+                eventStartTime.getHour() + ":" + startMins + " " + event.getStartMeridian();
 
         String eventEndTimeString =
-                eventEndTime.getHour() + ":" + endMins + " " + event.getEventEndMeridian();
+                eventEndTime.getHour() + ":" + endMins + " " + event.getEndMeridian();
 
         return EventModel.builder()
-                .withEventId(event.getId())
                 .withOwnerId(event.getOwnerId())
-                .withEventDate(eventDateString)
-                .withEventDescription(event.getDescription())
-                .withEventType(event.getType())
-                .withEventStartTime(eventStartTimeString)
-                .withEventEndTime(eventEndTimeString)
-                .withEventAttendingMemberNames(event.getAttendingMemberNames())
+                .withId(event.getId())
+                .withDate(eventDateString)
+                .withDescription(event.getDescription())
+                .withType(event.getType())
+                .withStartTime(eventStartTimeString)
+                .withEndTime(eventEndTimeString)
+                .withAttendingMemberNames(event.getAttendingMemberNames())
                 .build();
     }
 

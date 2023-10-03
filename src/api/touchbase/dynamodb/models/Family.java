@@ -24,7 +24,7 @@ public class Family {
         this.id = id;
     }
 
-    @DynamoDBIndexHashKey(globalSecondaryIndexName = "FamilyNameIndex", attributeName = "name")
+    @DynamoDBIndexHashKey(globalSecondaryIndexName = "familyName-accessCode", attributeName = "familyName")
     public String getName() {
         return name;
     }
@@ -33,7 +33,7 @@ public class Family {
         this.name = name;
     }
 
-    @DynamoDBIndexRangeKey(attributeName = "accessCode")
+    @DynamoDBIndexRangeKey(globalSecondaryIndexName = "familyName-accessCode", attributeName = "accessCode")
     public String getAccessCode() {
         return accessCode;
     }
@@ -48,8 +48,8 @@ public class Family {
         return events;
     }
 
-    public void setEvents(List<Event> familyEventIds) {
-        this.events = familyEventIds;
+    public void setEvents(List<Event> events) {
+        this.events = events;
     }
 
     @DynamoDBTypeConverted(converter = MapConverter.class)
@@ -60,5 +60,16 @@ public class Family {
 
     public void setNamesToMemberIds(Map<String, String> memberNamesToMemberIds) {
         this.memberNamesToMemberIds = memberNamesToMemberIds;
+    }
+
+    @Override
+    public String toString() {
+        return "Family{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", accessCode='" + accessCode + '\'' +
+                ", events=" + events +
+                ", memberNamesToMemberIds=" + memberNamesToMemberIds +
+                '}';
     }
 }

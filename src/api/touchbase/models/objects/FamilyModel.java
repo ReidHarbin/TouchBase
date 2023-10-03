@@ -21,6 +21,22 @@ public class FamilyModel {
         this.accessCode = builder.accessCode;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getAccessCode() {
+        return accessCode;
+    }
+
+    public List<String> getMemberNames() {
+        return memberNames;
+    }
+
     @Override
     public String toString() {
         return "FamilyModel{" +

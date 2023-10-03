@@ -22,8 +22,8 @@ public class DeleteMemberActivity implements RequestHandler<DeleteMemberRequest,
 
     @Override
     public DeleteMemberResult handleRequest(final DeleteMemberRequest deleteMemberRequest, Context context) {
-        String requestId = deleteMemberRequest.getMemberId();
-        String requestPassword = deleteMemberRequest.getMemberPassword();
+        String requestId = deleteMemberRequest.getId();
+        String requestPassword = deleteMemberRequest.getPassword();
 
         Member member = memberDao.getMember(requestId);
 
@@ -34,6 +34,8 @@ public class DeleteMemberActivity implements RequestHandler<DeleteMemberRequest,
                     "CANNOT DELETE ACCOUNT! " +
                             "The PASSWORD provided does not match the PASSWORD associated with this account.");
         }
+
+
 
         memberDao.deleteMember(member);
 

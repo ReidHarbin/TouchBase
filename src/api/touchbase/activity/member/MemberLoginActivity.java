@@ -36,7 +36,7 @@ public class MemberLoginActivity implements RequestHandler<MemberLoginRequest, M
 
         if (!TouchBasePasswordAuthentication
                 .isMatchingPassword(member.getSalt(), providedPassword, member.getPassword())) {
-            throw new InvalidPasswordException("Incorrect password");
+            throw new InvalidInputException("Incorrect password " + TouchBasePasswordAuthentication.hashPassword(member.getSalt().concat(providedPassword)) + " " + member.getPassword());
         }
 
         return  MemberLoginResult.builder()

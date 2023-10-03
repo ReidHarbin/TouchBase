@@ -2,7 +2,6 @@
 
 ## Background
 
-This design document describes the API for Touchbase, a family event management application.
 
 ## Architecture
 
@@ -13,9 +12,9 @@ This design document describes the API for Touchbase, a family event management 
 ### CreateMember Endpoint
 * Accepts `POST` requests to `/member`
 * Accepts a name and password to create a new Member
-    * If the username is associated with an existing Member, will throw `UsernameTakenException`
-    * If the request does not contain a name, will throw an `InvalidInputException`
-    * If the request does not contain a valid password, will throw an `InvalidPasswordException`
+  * If the username is associated with an existing Member, will throw `UsernameTakenException`
+  * If the request does not contain a name, will throw an `InvalidInputException`
+  * If the request does not contain a valid password, will throw an `InvalidPasswordException`
 * Creates a List of notifications containing a welcome message from touchbase
 * Uses the TouchBaseIdGenerator utility class to generate a unique Id for the Member
 * Uses TouchBasePasswordAuthentication utility class to encrypt the given password before being stored in the database
@@ -26,7 +25,7 @@ This design document describes the API for Touchbase, a family event management 
 * Accepts a name and password to return an existing Member with the associated Login credentials
 * Queries DynamoDB for a Member with the given username
     * If no username matches the given username, will throw a `MemberNotFoundException`
-* Uses TouchBasePasswordAuthentication utility class to check if the given password matches the password stored in the
+* Uses TouchBasePasswordAuthentication utility class to check if the given password matches the password stored in the 
   database
     * If the password does not match, will throw an `InvalidInputException`
 * Returns Member's Member Id and Family Id
@@ -34,7 +33,7 @@ This design document describes the API for Touchbase, a family event management 
 ### GetMember Endpoint
 * Accepts `GET` requests to `/member/{id}`
 * Accepts a Member Id to return the corresponding Member's details
-    * If there is no member associated with given the Id, will throw a `MemberNotFoundException`
+  * If there is no member associated with given the Id, will throw a `MemberNotFoundException`
 * Returns the Member's details
 
 ### DeleteMember Endpoint
@@ -42,23 +41,23 @@ This design document describes the API for Touchbase, a family event management 
 ### GetMemberNotifications Endpoint
 * Accepts `GET` requests to `/member/{id}/notifications`
 * Accepts a Member Id to return the corresponding Member's notifications
-    * If there is no member associated with given the Id, will throw a `MemberNotFoundException`
+  * If there is no member associated with given the Id, will throw a `MemberNotFoundException`
 * Returns a List of the Member's Notifications
 
 ### DeleteMemberNotification Endpoint
 * Accepts `DELETE` requests to `/member/{id}/notifications/`
 * Accepts a Member Id and Notification Id to delete the corresponding Member's Notifications
-    * If there is no Member associated with given the Id, will throw a `MemberNotFoundException`
-    * If there is no Notification associated with given the Id, will throw a `NotificationNotFoundException`
+  * If there is no Member associated with given the Id, will throw a `MemberNotFoundException`
+  * If there is no Notification associated with given the Id, will throw a `NotificationNotFoundException`
 * Returns the updated List of Notifications
 
 ### CreateFamily Endpoint
 * Accepts `POST` requests to `/family`
 * Accepts a name for the family and Id of the member who is creating the Family.
-    * If there is no Member associated with given the Id, will throw a `MemberNotFoundException`
-    * If the member is already a member of another family, will throw `MemberHasFamilyException`
-    * If there is no name for the family, will throw `InvalidInputException`
-* Uses a AccessCodeGenerator utility class to generate an access code for the Family, uses TouchBaseIdGenerator utility
+  * If there is no Member associated with given the Id, will throw a `MemberNotFoundException`
+  * If the member is already a member of another family, will throw `MemberHasFamilyException`
+  * If there is no name for the family, will throw `InvalidInputException`
+* Uses a AccessCodeGenerator utility class to generate an access code for the Family, uses TouchBaseIdGenerator utility 
   class to generate a unique Id for the Family, and creates an empty Event list for future events to be stored in
 * Sets the Member's Family Id to the generated Id
 * Returns the newly created family
@@ -66,16 +65,16 @@ This design document describes the API for Touchbase, a family event management 
 ### GetFamily Endpoint
 * Accepts `GET` requests to `/family/{id}`
 * Accepts a Family Id to return the corresponding Family's details
-    * If there is no Family associated with given the Id, will throw a `FamilyNotFoundException`
+  * If there is no Family associated with given the Id, will throw a `FamilyNotFoundException`
 * Returns the Family's details
 
 ### JoinFamily Endpoint
 * Accepts a `PUT` request to `/family`
 * Accepts a Family's name, access code, and Member Id of the Member that wants to join the Family
-    * If there is no access code or family name, will throw `InvalidInputException`
-    * If there is no member associated with the given Id, will throw `MemberNotFoundException`
-    * If the member already has a family, will throw `MemberHasFamilyException`
-    * If there is no Family associated with the name and access code, will throw `FamilyNotFoundException`
+  * If there is no access code or family name, will throw `InvalidInputException`
+  * If there is no member associated with the given Id, will throw `MemberNotFoundException`
+  * If the member already has a family, will throw `MemberHasFamilyException`
+  * If there is no Family associated with the name and access code, will throw `FamilyNotFoundException`
 * Updates the Member's Family Id with the Id that corresponds to the given name and access code
 * Notifies all Members in the Family that there is a new Member
 * Adds the Member to Family
@@ -84,9 +83,9 @@ This design document describes the API for Touchbase, a family event management 
 ### CreateEvent Endpoint
 * Accepts `POST` requests to `/family/{id}/events`
 * Accepts a Family Id and data to create an Event see requests
-    * If the end time is before the start time of the event, will throw ``
-    * If the date is before the current data, will throw ``
-    * If there is no Family associated with the name and access code, will throw `FamilyNotFoundException`
+  * If the end time is before the start time of the event, will throw ``
+  * If the date is before the current data, will throw ``
+  * If there is no Family associated with the name and access code, will throw `FamilyNotFoundException`
 * Converts the input time and date Strings into LocalTime and LocalDate objects for easier comparisons
 * Creates a new Event with a generated Id unique to that Event
 * Uses  utility class to insert the Event in its proper chronological order
@@ -95,9 +94,9 @@ This design document describes the API for Touchbase, a family event management 
 ### JoinEvent Endpoint
 * Accepts `PUT` requests to `/family/{id}/events`
 * Accepts a Family Id, Member Id, and Event Id of the event the Member wants to join
-    * If there is no member associated with the given Member Id, will throw `MemberNotFoundException`
-    * If there is no Family associated with the given Family Id, will throw a `FamilyNotFoundException`
-    * If there is no Event associated with the given Event Id, will throw a `EventNotFoundException`
+  * If there is no member associated with the given Member Id, will throw `MemberNotFoundException`
+  * If there is no Family associated with the given Family Id, will throw a `FamilyNotFoundException`
+  * If there is no Event associated with the given Event Id, will throw a `EventNotFoundException`
 * Notifies all members in that event that a new Member has joined
 * Adds the Member to the Event
 * Returns the Family's list of events with the updated event
@@ -105,7 +104,7 @@ This design document describes the API for Touchbase, a family event management 
 ### GetEvents Endpoint
 * Accepts `GET` requests to `/family/{id}/events`
 * Accepts a Family Id
-    * If there is no Family associated with the given Family Id, will throw a `FamilyNotFoundException`
+  * If there is no Family associated with the given Family Id, will throw a `FamilyNotFoundException`
 * Returns the Family's list of Events
 
 

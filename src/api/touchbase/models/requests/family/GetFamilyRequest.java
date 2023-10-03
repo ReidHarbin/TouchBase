@@ -1,25 +1,25 @@
 package api.touchbase.models.requests.family;
 
 public class GetFamilyRequest {
-    private String familyId;
+    private String id;
 
     public GetFamilyRequest() {
     }
 
-    public GetFamilyRequest(String familyId) {
-        this.familyId = familyId;
+    public GetFamilyRequest(String id) {
+        this.id = id;
     }
 
     public GetFamilyRequest(Builder builder) {
-        this.familyId = builder.familyId;
+        this.id = builder.id;
     }
 
-    public String getFamilyId() {
-        return familyId;
+    public String getId() {
+        return id;
     }
 
-    public void setFamilyId(String familyId) {
-        this.familyId = familyId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public Builder builder() {
@@ -29,19 +29,19 @@ public class GetFamilyRequest {
     @Override
     public String toString() {
         return "GetFamilyRequest{" +
-                "familyId='" + familyId + '\'' +
+                "familyId='" + id + '\'' +
                 '}';
     }
 
     public static final class Builder {
-        private String familyId;
+        private String id;
 
         private Builder() {
 
         }
 
-        public Builder withFamilyId(String familyId) {
-            this.familyId = familyId;
+        public Builder withFamilyId(String id) {
+            this.id = id;
             return this;
         }
 

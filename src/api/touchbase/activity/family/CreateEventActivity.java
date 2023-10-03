@@ -7,7 +7,7 @@ import api.touchbase.dynamodb.FamilyDao;
 import api.touchbase.dynamodb.models.Event;
 import api.touchbase.dynamodb.models.Family;
 import api.touchbase.exceptions.InvalidInputException;
-import api.touchbase.models.objects.FamilyModel;
+import api.touchbase.models.objects.EventModel;
 import api.touchbase.models.requests.family.CreateEventRequest;
 import api.touchbase.models.results.family.CreateEventResult;
 import api.touchbase.utils.EventInserter;
@@ -35,15 +35,15 @@ public class CreateEventActivity implements RequestHandler<CreateEventRequest, C
         LocalDateConverter dateConverter = new LocalDateConverter();
 
         String requestFamilyId = createEventRequest.getFamilyId();
-        String requestOwnerId = createEventRequest.getEventOwnerName();
-        String requestType = createEventRequest.getEventType();
+        String requestOwnerId = createEventRequest.getOwnerName();
+        String requestType = createEventRequest.getType();
         String requestDescription = createEventRequest.getDescription();
-        LocalDate requestDate = dateConverter.unconvert(createEventRequest.getEventDate());
-        String requestStartMeridian = createEventRequest.getEventStartMeridian();
-        String requestEndMeridian = createEventRequest.getEventEndMeridian();
-        LocalTime requestStartTime = timeConverter.unconvert(createEventRequest.getEventStartTime());
-        LocalTime requestEndTime = timeConverter.unconvert(createEventRequest.getEventEndTime());
-        List<String> requestAttendingMembers = createEventRequest.getEventAttendingMemberNames();
+        LocalDate requestDate = dateConverter.unconvert(createEventRequest.getDate());
+        String requestStartMeridian = createEventRequest.getStartMeridian();
+        String requestEndMeridian = createEventRequest.getEndMeridian();
+        LocalTime requestStartTime = timeConverter.unconvert(createEventRequest.getStartTime());
+        LocalTime requestEndTime = timeConverter.unconvert(createEventRequest.getEndTime());
+        List<String> requestAttendingMembers = createEventRequest.getAttendingMemberNames();
 
         if (requestEndTime.isBefore(requestStartTime)) {
             throw new InvalidInputException("The ending time for the event cannot be before the starting time");
@@ -59,11 +59,11 @@ public class CreateEventActivity implements RequestHandler<CreateEventRequest, C
         eventToCreate.setId(TouchBaseIdGenerator.generateId());
         eventToCreate.setOwnerId(requestOwnerId);
         eventToCreate.setType(requestType);
-        eventToCreate.setEventDate(requestDate);
-        eventToCreate.setEventStartMeridian(requestStartMeridian);
-        eventToCreate.setEventEndMeridian(requestEndMeridian);
-        eventToCreate.setEventStartTime(requestStartTime);
-        eventToCreate.setEventEndTime(requestEndTime);
+        eventToCreate.setDate(requestDate);
+        eventToCreate.setStartMeridian(requestStartMeridian);
+        eventToCreate.setEndMeridian(requestEndMeridian);
+        eventToCreate.setStartTime(requestStartTime);
+        eventToCreate.setEndTime(requestEndTime);
 
         List<String> eventAttendingMembers = new ArrayList<>();
         if (requestAttendingMembers != null) {
@@ -77,8 +77,12 @@ public class CreateEventActivity implements RequestHandler<CreateEventRequest, C
 
         familyDao.save(family);
 
+
+        List<EventModel> eventModels = new ArrayList<>();
+        family.getEvents().forEach((e) -> eventModels.add(ModelConverter.toEventModel(e)));
+
         return CreateEventResult.builder()
-                .withFamilyModel(ModelConverter.toFamilyModel(family))
+                .withEvents(eventModels)
                 .build();
     }
 }

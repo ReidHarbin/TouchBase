@@ -28,7 +28,7 @@ public class DeleteMemberNotificationActivity implements RequestHandler<DeleteMe
     public DeleteMemberNotificationResult handleRequest(final DeleteMemberNotificationRequest deleteMemberNotificationRequest, Context context) {
 
         Member member = memberDao.getMember(deleteMemberNotificationRequest.getId());
-        int indexToRemove = deleteMemberNotificationRequest.getMemberNotificationIndex();
+        int indexToRemove = deleteMemberNotificationRequest.getNotificationIndex();
         List<Notification> memberNotifications = member.getMemberNotifications();
 
         if (indexToRemove >= memberNotifications.size() || indexToRemove < 0) {

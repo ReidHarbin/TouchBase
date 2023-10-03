@@ -1,26 +1,26 @@
 package api.touchbase.models.requests.member;
 
 public class GetMemberRequest {
-    private String memberId;
+    private String id;
 
     public GetMemberRequest() {
     }
 
-    public GetMemberRequest(String memberId) {
-        this.memberId = memberId;
+    public GetMemberRequest(String id) {
+        this.id = id;
     }
 
     public GetMemberRequest(Builder builder) {
-        this.memberId = builder.memberId;
+        this.id = builder.id;
     }
 
     // Getters and Setters
-    public String getMemberId() {
-        return memberId;
+    public String getId() {
+        return id;
     }
 
-    public void setMemberId(String memberId) {
-        this.memberId = memberId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public Builder builder() {
@@ -30,20 +30,20 @@ public class GetMemberRequest {
     @Override
     public String toString() {
         return "GetMemberDetailsRequest{" +
-                "memberId='" + memberId + '\'' +
+                "memberId='" + id + '\'' +
                 '}';
     }
 
     // Builder class
     public static final class Builder {
-        private String memberId;
+        private String id;
 
         private Builder() {
 
         }
 
-        public Builder withMemberId(String memberId) {
-            this.memberId = memberId;
+        public Builder withMemberId(String id) {
+            this.id = id;
             return this;
         }
 

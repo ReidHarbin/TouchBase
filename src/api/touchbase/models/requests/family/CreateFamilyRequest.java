@@ -1,61 +1,55 @@
 package api.touchbase.models.requests.family;
 
 public class CreateFamilyRequest {
-    private String familyCreatorId;
-    private String familyName;
+    private String creatorId;
+    private String name;
 
     public CreateFamilyRequest() {
 
     }
 
-    public CreateFamilyRequest(String familyCreatorId, String familyName) {
-        this.familyCreatorId = familyCreatorId;
-        this.familyName = familyName;
+    public CreateFamilyRequest(String creatorId, String name) {
+        this.creatorId = creatorId;
+        this.name = name;
     }
 
     public CreateFamilyRequest(Builder builder) {
-        this.familyCreatorId = builder.familyCreatorId;
-        this.familyName = builder.familyName;
+        this.creatorId = builder.creatorId;
+        this.name = builder.name;
     }
 
     public Builder builder() {
         return new Builder();
     }
 
-    public String getFamilyCreatorId() {
-        return familyCreatorId;
+    public String getCreatorId() {
+        return creatorId;
     }
 
-    public void setFamilyCreatorId(String familyCreatorId) {
-        this.familyCreatorId = familyCreatorId;
+    public void setCreatorId(String creatorId) {
+        this.creatorId = creatorId;
     }
 
-    public String getFamilyName() {
-        return familyName;
+    public String getName() {
+        return name;
     }
 
-    public void setFamilyName(String familyName) {
-        this.familyName = familyName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public static final class Builder {
-        private String familyCreatorId;
-        private String familyName;
-        private String familyPassword;
+        private String creatorId;
+        private String name;
 
-        public Builder withFamilyCreatorId(String familyCreatorId) {
-            this.familyCreatorId = familyCreatorId;
+        public Builder withFamilyCreatorId(String creatorId) {
+            this.creatorId = creatorId;
             return this;
         }
-        public Builder withFamilyName(String familyName) {
-            this.familyName = familyName;
+        public Builder withFamilyName(String name) {
+            this.name = name;
             return this;
         }
-        public Builder withFamilyPassword(String familyPassword) {
-            this.familyPassword = familyPassword;
-            return this;
-        }
-
         public CreateFamilyRequest build() {
             return new CreateFamilyRequest(this);
         }

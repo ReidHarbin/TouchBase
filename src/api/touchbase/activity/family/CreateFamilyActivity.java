@@ -3,17 +3,13 @@ package api.touchbase.activity.family;
 import api.touchbase.converters.ModelConverter;
 import api.touchbase.dynamodb.FamilyDao;
 import api.touchbase.dynamodb.MemberDao;
-import api.touchbase.dynamodb.models.Event;
 import api.touchbase.dynamodb.models.Family;
 import api.touchbase.dynamodb.models.Member;
 import api.touchbase.exceptions.*;
-import api.touchbase.models.objects.FamilyModel;
 import api.touchbase.models.requests.family.CreateFamilyRequest;
 import api.touchbase.models.results.family.CreateFamilyResult;
 import api.touchbase.utils.AccessCodeGenerator;
 import api.touchbase.utils.TouchBaseIdGenerator;
-import api.touchbase.utils.InputStringValidator;
-import api.touchbase.utils.TouchBasePasswordAuthentication;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 
@@ -32,8 +28,8 @@ public class CreateFamilyActivity implements RequestHandler<CreateFamilyRequest,
 
     @Override
     public CreateFamilyResult handleRequest(final CreateFamilyRequest createFamilyRequest, Context context) {
-        String requestName = createFamilyRequest.getFamilyName();
-        String requestCreatorId = createFamilyRequest.getFamilyCreatorId();
+        String requestName = createFamilyRequest.getName();
+        String requestCreatorId = createFamilyRequest.getCreatorId();
 
         Member creator = memberDao.getMember(requestCreatorId);
 

@@ -1,0 +1,69 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+class Member {
+  - id: String <<@DynamoDBHashKey>>
+  - familyId: String
+  - username: String <<@DynamoDBIndexHashKey>>
+  - password: String
+  - salt: String
+  - notifications: List<Notification>
+}
+
+class Notification {
+  - id: String
+  - headline: String
+  - description: String
+  - senderName: String
+  - date: String
+}
+
+class MemberDao {
+    - mapper: DynamoDBMapper
+    + getMember(): Member
+    + saveMember(): Member
+    + deleteMember(): void
+    + queryMemberNames(): PaginatedQueryList<Member>
+    + usernameExists(): boolean
+}
+
+class CreateMemberActivity {
+    - memberDao: MemberDao
+    + handleRequest(): CreateMemberResult
+}
+class DeleteMemberActivity {
+    - memberDao: MemberDao
+    + handleRequest(): DeleteMemberResult
+}
+class GetMemberActivity {
+    - memberDao: MemberDao
+    + handleRequest(): GetMemberResult
+}
+class GetMemberNotificationsActivity {
+    - memberDao: MemberDao
+    + handleRequest(): GetMemberNotificationsResult
+}
+class MemberLoginActivity {
+    - memberDao: MemberDao
+    + handleRequest(): MemberLoginResult
+}
+
+class InputStringValidator {
+    + isValidPassword(): boolean
+}
+
+class TouchBaseIdGenerator {
+    + generateId(): String
+}
+
+class TouchBasePasswordAuthentication {
+    + generateRandomSalt(): String
+    + hashPassword(): String
+    + isMatchingPassword(): boolean
+    - randomRangeIntValue(): int
+}
+
+
+
+@enduml

@@ -1,47 +1,47 @@
 package api.touchbase.models.requests.member;
 
 public class DeleteMemberRequest {
-    private String memberId;
-    private String memberPassword;
-    private String memberName;
+    private String id;
+    private String password;
+    private String name;
 
     public DeleteMemberRequest() {
     }
 
-    public DeleteMemberRequest(String memberId, String memberPassword, String memberName) {
-        this.memberId = memberId;
-        this.memberPassword = memberPassword;
-        this.memberName = memberName;
+    public DeleteMemberRequest(String id, String password, String name) {
+        this.id = id;
+        this.password = password;
+        this.name = name;
     }
 
     public DeleteMemberRequest(Builder builder) {
-        this.memberId = builder.memberId;
-        this.memberPassword = builder.memberPassword;
-        this.memberName = builder.memberName;
+        this.id = builder.id;
+        this.password = builder.password;
+        this.name = builder.name;
     }
 
-    public String getMemberId() {
-        return memberId;
+    public String getId() {
+        return id;
     }
 
-    public void setMemberId(String memberId) {
-        this.memberId = memberId;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getMemberPassword() {
-        return memberPassword;
+    public String getPassword() {
+        return password;
     }
 
-    public void setMemberPassword(String memberPassword) {
-        this.memberPassword = memberPassword;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getMemberName() {
-        return memberName;
+    public String getName() {
+        return name;
     }
 
-    public void setMemberName(String memberName) {
-        this.memberName = memberName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Builder builder() {
@@ -51,30 +51,30 @@ public class DeleteMemberRequest {
     @Override
     public String toString() {
         return "DeleteMemberRequest{" +
-                "memberId='" + memberId + '\'' +
-                ", memberPassword='" + memberPassword + '\'' +
-                ", memberName='" + memberName + '\'' +
+                "memberId='" + id + '\'' +
+                ", memberPassword='" + password + '\'' +
+                ", memberName='" + name + '\'' +
                 '}';
     }
 
     // Builder Class
     public static final class Builder {
-        private String memberId;
-        private String memberPassword;
-        private String memberName;
+        private String id;
+        private String password;
+        private String name;
 
-        public Builder withMemberId(String memberId) {
-            this.memberId = memberId;
+        public Builder withMemberId(String id) {
+            this.id = id;
             return this;
         }
 
-        public Builder withMemberPassword(String memberPassword) {
-            this.memberPassword = memberPassword;
+        public Builder withMemberPassword(String password) {
+            this.password = password;
             return this;
         }
 
-        public Builder withMemberName(String memberName) {
-            this.memberName = memberName;
+        public Builder withMemberName(String name) {
+            this.name = name;
             return this;
         }
 

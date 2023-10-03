@@ -37,19 +37,6 @@ public class CreateMemberActivity implements RequestHandler<CreateMemberRequest,
         this.notificationCreator = new NotificationCreator();
     }
 
-    /**
-     * This method handles the incoming request by persisting a new member with the
-     * provided member name, password,and birthday from the request
-     * <p>
-     * It then returns the new user
-     * <p>
-     *
-     * If the provided name or password contain invalid characters, throws an InvalidAttributeException
-     *
-     * @param createMemberRequest Request object containing the member's name, password, and birthday associated
-     *                            with it.
-     * @return createMemberResult result object containing the API defined {@link MemberModel}
-     */
     @Override
     public CreateMemberResult handleRequest(final CreateMemberRequest createMemberRequest, Context context) {
         String password = createMemberRequest.getPassword();
@@ -72,7 +59,7 @@ public class CreateMemberActivity implements RequestHandler<CreateMemberRequest,
         memberToCreate.setId(TouchBaseIdGenerator.generateId());
         memberToCreate.setName(name);
         memberToCreate.setSalt(TouchBasePasswordAuthentication.generateRandomSalt());
-        memberToCreate.setPassword(TouchBasePasswordAuthentication.hashPassword(memberToCreate.getSalt()).concat(password));
+        memberToCreate.setPassword(TouchBasePasswordAuthentication.hashPassword(memberToCreate.getSalt().concat(password)));
         memberToCreate.setMemberNotifications(notifications);
 
         memberDao.saveMember(memberToCreate);

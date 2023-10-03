@@ -21,6 +21,10 @@ public class NotificationModel {
         this.date = builder.date;
     }
 
+    public String getId() {
+        return id;
+    }
+
     public String getHeadline() {
         return headline;
     }

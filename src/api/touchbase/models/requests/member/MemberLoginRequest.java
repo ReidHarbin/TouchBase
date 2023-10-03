@@ -8,9 +8,9 @@ public class MemberLoginRequest {
 
     }
 
-    public MemberLoginRequest(String memberName, String memberPassword) {
-        this.name = memberName;
-        this.password = memberPassword;
+    public MemberLoginRequest(String name, String password) {
+        this.name = name;
+        this.password = password;
     }
 
     public MemberLoginRequest(Builder builder) {

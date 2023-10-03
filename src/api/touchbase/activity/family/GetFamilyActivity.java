@@ -20,8 +20,7 @@ public class GetFamilyActivity implements RequestHandler<GetFamilyRequest, GetFa
 
     @Override
     public GetFamilyResult handleRequest(final GetFamilyRequest getFamilyRequest, Context context) {
-        Family family = familyDao.getFamily(getFamilyRequest.getFamilyId());
-
+        Family family = familyDao.getFamily(getFamilyRequest.getId());
         return GetFamilyResult.builder()
                 .withFamily(ModelConverter.toFamilyModel(family))
                 .build();

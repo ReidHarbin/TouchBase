@@ -30,7 +30,7 @@ public class TouchBasePasswordAuthentication {
     }
 
     public static boolean isMatchingPassword(String storedSalt, String providedPassword, String storedPassword) {
-        String seasonedProvidedPassword = storedSalt.concat(providedPassword.concat(PEPPER));
+        String seasonedProvidedPassword = storedSalt.concat(providedPassword).concat(PEPPER);
 
         boolean isMatchingPassword = argon2.verify(storedPassword, seasonedProvidedPassword.toCharArray());
 

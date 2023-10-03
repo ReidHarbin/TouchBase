@@ -43,7 +43,7 @@ public class NotificationCreator {
     }
 
     public Notification familyMemberJoinedEventNotification(Event event, String senderName) {
-        LocalDate eventDate = event.getEventDate();
+        LocalDate eventDate = event.getDate();
         int year = eventDate.getYear();
         int month = eventDate.getMonthValue();
         int day = eventDate.getDayOfMonth();

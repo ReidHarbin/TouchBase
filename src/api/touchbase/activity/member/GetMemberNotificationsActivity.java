@@ -1,6 +1,5 @@
 package api.touchbase.activity.member;
 
-import api.touchbase.dynamodb.models.Notification;
 import api.touchbase.converters.ModelConverter;
 import api.touchbase.dynamodb.MemberDao;
 import api.touchbase.dynamodb.models.Member;
@@ -9,8 +8,6 @@ import api.touchbase.models.requests.member.GetMemberNotificationsRequest;
 import api.touchbase.models.results.member.GetMemberNotificationsResult;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -27,7 +24,7 @@ public class GetMemberNotificationsActivity implements RequestHandler<GetMemberN
 
     @Override
     public GetMemberNotificationsResult handleRequest(final GetMemberNotificationsRequest getMemberNotificationsRequest, Context context) {
-        Member member = memberDao.getMember(getMemberNotificationsRequest.getMemberId());
+        Member member = memberDao.getMember(getMemberNotificationsRequest.getId());
 
         List<NotificationModel> notificationModels = new ArrayList<>();
         member.getMemberNotifications().forEach(n -> notificationModels.add(ModelConverter.toNotificationModel(n)));

@@ -27,6 +27,8 @@ public class GetEventsActivity implements RequestHandler<GetEventsRequest, GetEv
         List<EventModel> eventModels = new ArrayList<>();
         family.getEvents().forEach((e) -> eventModels.add(ModelConverter.toEventModel(e)));
 
-        return GetEventsResult.builder().withFamilyEvents(eventModels).build();
+        return GetEventsResult.builder()
+                .withFamilyEvents(eventModels)
+                .build();
     }
 }

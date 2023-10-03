@@ -6,6 +6,11 @@ public class GetFamilyResult {
     private FamilyModel family;
 
     public GetFamilyResult() {
+
+    }
+
+    public GetFamilyResult(FamilyModel family) {
+        this.family = family;
     }
 
     public GetFamilyResult(Builder builder) {
@@ -35,5 +40,12 @@ public class GetFamilyResult {
         public GetFamilyResult build() {
             return new GetFamilyResult(this);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "GetFamilyResult{" +
+                "family=" + family +
+                '}';
     }
 }

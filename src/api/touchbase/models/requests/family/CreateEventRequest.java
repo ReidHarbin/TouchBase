@@ -4,51 +4,51 @@ import java.util.List;
 
 public class CreateEventRequest {
     private String familyId;
-    private String eventOwnerName;
-    private String eventType;
-    private String eventDate;
-    private String eventStartMeridian;
-    private String eventEndMeridian;
-    private String eventStartTime;
-    private String eventEndTime;
+    private String ownerName;
+    private String type;
+    private String date;
+    private String startMeridian;
+    private String endMeridian;
+    private String startTime;
+    private String endTime;
     private String description;
-    private List<String> eventAttendingMemberNames;
+    private List<String> attendingMemberNames;
 
     public CreateEventRequest() {
     }
 
-    public CreateEventRequest(String familyId, String eventOwnerId, String eventType, String eventDate,
-                              String eventStartTime, String eventEndTime, String description,
-                              List<String> eventAttendingMemberNames) {
+    public CreateEventRequest(String familyId, String ownerId, String type, String date,
+                         String startTime, String endTime, String description,
+                         List<String> attendingMemberNames) {
         this.familyId = familyId;
-        this.eventOwnerName = eventOwnerId;
-        this.eventType = eventType;
-        this.eventDate = eventDate;
-        this.eventStartTime = eventStartTime;
-        this.eventEndTime = eventEndTime;
+        this.ownerName = ownerId;
+        this.type = type;
+        this.date = date;
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.description = description;
-        this.eventAttendingMemberNames = eventAttendingMemberNames;
+        this.attendingMemberNames = attendingMemberNames;
     }
 
     public CreateEventRequest(Builder builder){
         this.familyId = builder.familyId;
-        this.eventOwnerName = builder.eventOwnerName;
+        this.ownerName = builder.ownerName;
         this.description = builder.description;
-        this.eventType = builder.eventType;
-        this.eventDate = builder.eventDate;
-        this.eventStartMeridian = builder.eventStartMeridian;
-        this.eventEndMeridian = builder.eventEndMeridian;
-        this.eventStartTime = builder.eventStartTime;
-        this.eventEndTime = builder.eventEndTime;
-        this.eventAttendingMemberNames = builder.eventAttendingMemberNames;
+        this.type = builder.type;
+        this.date = builder.date;
+        this.startMeridian = builder.startMeridian;
+        this.endMeridian = builder.endMeridian;
+        this.startTime = builder.startTime;
+        this.endTime = builder.endTime;
+        this.attendingMemberNames = builder.attendingMemberNames;
     }
 
-    public String getEventOwnerName() {
-        return eventOwnerName;
+    public String getOwnerName() {
+        return ownerName;
     }
 
-    public void setEventOwnerName(String eventOwnerName) {
-        this.eventOwnerName = eventOwnerName;
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
     }
 
     public String getDescription() {
@@ -59,52 +59,52 @@ public class CreateEventRequest {
         this.description = description;
     }
 
-    public String getEventType() {
-        return eventType;
+    public String getType() {
+        return type;
     }
 
-    public void setEventType(String eventType) {
-        this.eventType = eventType;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public String getEventDate() {
-        return eventDate;
+    public String getDate() {
+        return date;
     }
 
-    public void setEventDate(String eventDate) {
-        this.eventDate = eventDate;
+    public void setDate(String date) {
+        this.date = date;
     }
 
-    public String getEventStartMeridian() {
-        return eventStartMeridian;
+    public String getStartMeridian() {
+        return startMeridian;
     }
 
-    public void setEventStartMeridian(String eventStartMeridian) {
-        this.eventStartMeridian = eventStartMeridian;
+    public void setStartMeridian(String startMeridian) {
+        this.startMeridian = startMeridian;
     }
 
-    public String getEventEndMeridian() {
-        return eventEndMeridian;
+    public String getEndMeridian() {
+        return endMeridian;
     }
 
-    public void setEventEndMeridian(String eventEndMeridian) {
-        this.eventEndMeridian = eventEndMeridian;
+    public void setEndMeridian(String endMeridian) {
+        this.endMeridian = endMeridian;
     }
 
-    public String getEventStartTime() {
-        return eventStartTime;
+    public String getStartTime() {
+        return startTime;
     }
 
-    public void setEventStartTime(String eventStartTime) {
-        this.eventStartTime = eventStartTime;
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
     }
 
-    public String getEventEndTime() {
-        return eventEndTime;
+    public String getEndTime() {
+        return endTime;
     }
 
-    public void setEventEndTime(String eventEndTime) {
-        this.eventEndTime = eventEndTime;
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
     }
 
     public String getFamilyId() {
@@ -115,12 +115,12 @@ public class CreateEventRequest {
         this.familyId = familyId;
     }
 
-    public List<String> getEventAttendingMemberNames() {
-        return eventAttendingMemberNames;
+    public List<String> getAttendingMemberNames() {
+        return attendingMemberNames;
     }
 
-    public void setEventAttendingMemberNames(List<String> eventAttendingMemberNames) {
-        this.eventAttendingMemberNames = eventAttendingMemberNames;
+    public void setAttendingMemberNames(List<String> attendingMemberNames) {
+        this.attendingMemberNames = attendingMemberNames;
     }
 
     public static Builder builder() {
@@ -129,23 +129,23 @@ public class CreateEventRequest {
 
     public static final class Builder {
         private String familyId;
-        private String eventOwnerName;
+        private String ownerName;
         private String description;
-        private String eventType;
-        private String eventDate;
-        private String eventStartMeridian;
-        private String eventEndMeridian;
-        private String eventStartTime;
-        private String eventEndTime;
-        private List<String> eventAttendingMemberNames;
+        private String type;
+        private String date;
+        private String startMeridian;
+        private String endMeridian;
+        private String startTime;
+        private String endTime;
+        private List<String> attendingMemberNames;
 
         public Builder withFamilyId(String familyId) {
             this.familyId = familyId;
             return this;
         }
 
-        public Builder withEventOwnerName(String eventOwnerName) {
-            this.eventOwnerName = eventOwnerName;
+        public Builder withOwnerName(String ownerName) {
+            this.ownerName = ownerName;
             return this;
         }
 
@@ -153,38 +153,39 @@ public class CreateEventRequest {
             this.description = description;
             return this;
         }
-        public Builder withEventType(String eventType) {
-            this.eventType = eventType;
+
+        public Builder withType(String type) {
+            this.type = type;
             return this;
         }
 
-        public Builder withEventDate(String eventDate) {
-            this.eventDate = eventDate;
+        public Builder withDate(String date) {
+            this.date = date;
             return this;
         }
 
-        public Builder withEventStartTime(String eventStartTime) {
-            this.eventStartTime = eventStartTime;
+        public Builder withStartTime(String startTime) {
+            this.startTime = startTime;
             return this;
         }
 
-        public Builder withEventEndTime(String eventEndTime) {
-            this.eventEndTime = eventEndTime;
+        public Builder withEndTime(String endTime) {
+            this.endTime = endTime;
             return this;
         }
 
-        public Builder withEventStartMeridian(String eventStartMeridian) {
-            this.eventStartMeridian = eventStartMeridian;
+        public Builder withStartMeridian(String startMeridian) {
+            this.startMeridian = startMeridian;
             return this;
         }
 
-        public Builder withEventEndMeridian(String eventEndMeridian) {
-            this.eventEndMeridian = eventEndMeridian;
+        public Builder withEndMeridian(String endMeridian) {
+            this.endMeridian = endMeridian;
             return this;
         }
 
-        public Builder withEventAttendingMemberNames(List<String> eventAttendingMemberNames) {
-            this.eventAttendingMemberNames = eventAttendingMemberNames;
+        public Builder withAttendingMemberNames(List<String> attendingMemberNames) {
+            this.attendingMemberNames = attendingMemberNames;
             return this;
         }
 

@@ -2,7 +2,7 @@ package api.touchbase.models.requests.family;
 
 public class GetEventsRequest {
     private String familyId;
-    private String familyMemberId;
+    private String memberId;
 
     public GetEventsRequest() {
     }
@@ -11,21 +11,21 @@ public class GetEventsRequest {
         this.familyId = familyId;
     }
 
-    public GetEventsRequest(String familyId, String familyMemberId) {
+    public GetEventsRequest(String familyId, String memberId) {
         this.familyId = familyId;
-        this.familyMemberId = familyMemberId;
+        this.memberId = memberId;
     }
 
-    public String getFamilyMemberId() {
-        return familyMemberId;
+    public String getMemberId() {
+        return memberId;
     }
 
-    public void setFamilyMemberId(String familyMemberId) {
-        this.familyMemberId = familyMemberId;
+    public void setMemberId(String memberId) {
+        this.memberId = memberId;
     }
 
     public GetEventsRequest(Builder builder) {
-        this.familyMemberId = builder.familyMemberId;
+        this.memberId = builder.memberId;
         this.familyId = builder.familyId;
     }
 
@@ -43,15 +43,15 @@ public class GetEventsRequest {
 
     public static final class Builder {
         private String familyId;
-        private String familyMemberId;
+        private String memberId;
 
         public Builder withFamilyId(String familyId) {
             this.familyId = familyId;
             return this;
         }
 
-        public Builder withFamilyMemberId(String familyMemberId) {
-            this.familyMemberId = familyMemberId;
+        public Builder withFamilyMemberId(String memberId) {
+            this.memberId = memberId;
             return this;
         }
 

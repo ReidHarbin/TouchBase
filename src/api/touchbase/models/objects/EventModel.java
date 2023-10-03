@@ -1,31 +1,62 @@
 package api.touchbase.models.objects;
 
 import java.util.List;
-import java.util.Set;
 
 public class EventModel {
-    private String eventId;
-    private String eventOwnerId;
-    private String eventDescription;
-    private String eventType;
-    private String eventDate;
-    private String eventStartTime;
-    private String eventEndTime;
-    private List<String> eventAttendingMemberNames;
+    private String id;
+    private String ownerId;
+    private String description;
+    private String type;
+    private String date;
+    private String startTime;
+    private String endTime;
+    private List<String> attendingMemberNames;
 
     public EventModel() {
 
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public String getOwnerId() {
+        return ownerId;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public List<String> getAttendingMemberNames() {
+        return attendingMemberNames;
+    }
+
     public EventModel(Builder builder) {
-        this.eventId = builder.eventId;
-        this.eventOwnerId = builder.eventOwnerId;
-        this.eventDescription = builder.eventDescription;
-        this.eventType = builder.eventType;
-        this.eventDate = builder.eventDate;
-        this.eventStartTime = builder.eventStartTime;
-        this.eventEndTime = builder.eventEndTime;
-        this.eventAttendingMemberNames = builder.eventAttendingMemberNames;
+        this.id = builder.id;
+        this.ownerId = builder.ownerId;
+        this.description = builder.description;
+        this.type = builder.type;
+        this.date = builder.date;
+        this.startTime = builder.startTime;
+        this.endTime = builder.endTime;
+        this.attendingMemberNames = builder.attendingMemberNames;
     }
     public static Builder builder() {
         return new Builder();
@@ -34,59 +65,64 @@ public class EventModel {
     @Override
     public String toString() {
         return "EventModel{" +
-                "eventId='" + eventId + '\'' +
-                ", eventOwnerId='" + eventOwnerId + '\'' +
-                ", eventDescription='" + eventDescription + '\'' +
-                ", eventType='" + eventType + '\'' +
-                ", eventDate='" + eventDate + '\'' +
+                "eventId='" + id + '\'' +
+                ", eventOwnerId='" + ownerId + '\'' +
+                ", eventDescription='" + description + '\'' +
+                ", eventType='" + type + '\'' +
+                ", eventDate='" + date + '\'' +
                 '}';
     }
 
     public static class Builder {
-        private String eventId;
-        private String eventOwnerId;
-        private String eventDescription;
-        private String eventType;
-        private String eventDate;
-        private String eventStartTime;
-        private String eventEndTime;
-        private List<String> eventAttendingMemberNames;
+        private String id;
+        private String ownerId;
+        private String description;
+        private String type;
+        private String date;
+        private String startTime;
+        private String endTime;
+        private List<String> attendingMemberNames;
 
-        public Builder withEventId(String eventId) {
-            this.eventId = eventId;
-            return this;
-        }
-        public Builder withOwnerId(String eventOwnerId) {
-            this.eventOwnerId = eventOwnerId;
-            return this;
-        }
-        public Builder withEventDescription(String eventDescription) {
-            this.eventDescription = eventDescription;
-            return this;
-        }
-        public Builder withEventType(String eventType) {
-            this.eventType = eventType;
-            return this;
-        }
-        public Builder withEventDate(String eventDate) {
-            this.eventDate = eventDate;
+        public Builder withId(String id) {
+            this.id = id;
             return this;
         }
 
-        public Builder withEventAttendingMemberNames(List<String> eventFamilyMemberNames) {
-            this.eventAttendingMemberNames = eventFamilyMemberNames;
+        public Builder withOwnerId(String ownerId) {
+            this.ownerId = ownerId;
             return this;
         }
 
-        public Builder withEventStartTime(String eventStartTime) {
-            this.eventStartTime = eventStartTime;
+        public Builder withDescription(String description) {
+            this.description = description;
             return this;
         }
 
-        public Builder withEventEndTime(String eventEndTime) {
-            this.eventEndTime = eventEndTime;
+        public Builder withType(String type) {
+            this.type = type;
             return this;
         }
+
+        public Builder withDate(String date) {
+            this.date = date;
+            return this;
+        }
+
+        public Builder withAttendingMemberNames(List<String> attendingMemberNames) {
+            this.attendingMemberNames = attendingMemberNames;
+            return this;
+        }
+
+        public Builder withStartTime(String startTime) {
+            this.startTime = startTime;
+            return this;
+        }
+
+        public Builder withEndTime(String endTime) {
+            this.endTime = endTime;
+            return this;
+        }
+
 
         public EventModel build() {
             return new EventModel(this);

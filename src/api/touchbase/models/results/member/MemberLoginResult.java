@@ -1,41 +1,41 @@
 package api.touchbase.models.results.member;
 
 public class MemberLoginResult {
-    private String memberId;
-    private String memberFamilyId;
+    private String id;
+    private String familyId;
 
     public MemberLoginResult() {
 
     }
 
-    public MemberLoginResult(String memberId) {
-        this.memberId = memberId;
+    public MemberLoginResult(String id) {
+        this.id = id;
     }
 
-    public MemberLoginResult(String memberId, String memberFamilyId) {
-        this.memberId = memberId;
-        this.memberFamilyId = memberFamilyId;
+    public MemberLoginResult(String id, String familyId) {
+        this.id = id;
+        this.familyId = familyId;
     }
 
     public MemberLoginResult(Builder builder) {
-        this.memberId = builder.memberId;
-        this.memberFamilyId = builder.memberFamilyId;
+        this.id = builder.memberId;
+        this.familyId = builder.memberFamilyId;
     }
 
-    public String getMemberId() {
-        return memberId;
+    public String getId() {
+        return id;
     }
 
-    public void setMemberId(String memberId) {
-        this.memberId = memberId;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getMemberFamilyId() {
-        return memberFamilyId;
+    public String getFamilyId() {
+        return familyId;
     }
 
-    public void setMemberFamilyId(String memberFamilyId) {
-        this.memberFamilyId = memberFamilyId;
+    public void setFamilyId(String familyId) {
+        this.familyId = familyId;
     }
 
     public static Builder builder() {

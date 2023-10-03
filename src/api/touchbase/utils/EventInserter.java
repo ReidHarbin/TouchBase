@@ -19,9 +19,9 @@ public class EventInserter {
         while (left <= right) {
             int mid = left + (right - left) / 2;
 
-            LocalDate midDate = events.get(mid).getEventDate();
-            String midMeridian = events.get(mid).getEventStartMeridian();
-            LocalTime midStartTime = events.get(mid).getEventStartTime();
+            LocalDate midDate = events.get(mid).getDate();
+            String midMeridian = events.get(mid).getStartMeridian();
+            LocalTime midStartTime = events.get(mid).getStartTime();
 
             if (midDate.isEqual(targetDate) && midStartTime.equals(targetStartTime) &&
                     midMeridian.equals(startMeridian)) {

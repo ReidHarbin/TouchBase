@@ -37,7 +37,7 @@ public class JoinFamilyActivity implements RequestHandler<JoinFamilyRequest, Joi
         Member member = memberDao.getMember(requestMemberId);
 
         if (requestAccessCode == null || requestAccessCode.isBlank()) {
-            throw new InvalidPasswordException("You must provide a valid password");
+            throw new InvalidInputException("You must provide a valid password");
         }
         if (requestFamilyName == null || requestFamilyName.isBlank()) {
             throw new InvalidInputException("You must provide a a family name");

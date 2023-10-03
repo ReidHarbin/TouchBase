@@ -2,20 +2,20 @@ package api.touchbase.models.requests.member;
 
 public class DeleteMemberNotificationRequest {
     private String id;
-    private int memberNotificationIndex;
+    private int notificationIndex;
 
     // Constructors
     public DeleteMemberNotificationRequest() {
     }
 
-    public DeleteMemberNotificationRequest(String id, int memberNotificationIndex) {
+    public DeleteMemberNotificationRequest(String id, int notificationIndex) {
         this.id = id;
-        this.memberNotificationIndex = memberNotificationIndex;
+        this.notificationIndex = notificationIndex;
     }
 
     public DeleteMemberNotificationRequest(Builder builder) {
-        this.id = builder.memberId;
-        this.memberNotificationIndex = builder.memberNotificationIndex;
+        this.id = builder.id;
+        this.notificationIndex = builder.notificationIndex;
     }
 
     // Getters and Setters
@@ -23,16 +23,16 @@ public class DeleteMemberNotificationRequest {
         return id;
     }
 
-    public int getMemberNotificationIndex() {
-        return memberNotificationIndex;
+    public int getNotificationIndex() {
+        return notificationIndex;
     }
 
     public void setId(String id) {
         this.id = id;
     }
 
-    public void setMemberNotificationIndex(int memberNotificationIndex) {
-        this.memberNotificationIndex = memberNotificationIndex;
+    public void setNotificationIndex(int notificationIndex) {
+        this.notificationIndex = notificationIndex;
     }
 
     // Builder Constructor
@@ -44,22 +44,22 @@ public class DeleteMemberNotificationRequest {
     public String toString() {
         return "DeleteMemberNotificationRequest{" +
                 "memberId='" + id + '\'' +
-                ", memberNotificationIndex=" + memberNotificationIndex +
+                ", memberNotificationIndex=" + notificationIndex +
                 '}';
     }
 
     // Builder class
     public static final class Builder {
-        private String memberId;
-        private int memberNotificationIndex;
+        private String id;
+        private int notificationIndex;
 
-        public Builder withMemberId(String memberId) {
-            this.memberId = memberId;
+        public Builder withMemberId(String id) {
+            this.id = id;
             return this;
         }
 
-        public Builder withMemberNotificationIndex(int memberNotificationIndex) {
-            this.memberNotificationIndex = memberNotificationIndex;
+        public Builder withMemberNotificationIndex(int notificationIndex) {
+            this.notificationIndex = notificationIndex;
             return this;
         }
 

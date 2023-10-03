@@ -1,28 +1,31 @@
 package api.touchbase.models.results.family;
 
+import api.touchbase.models.objects.EventModel;
 import api.touchbase.models.objects.FamilyModel;
 
+import java.util.List;
+
 public class CreateEventResult {
-    private FamilyModel family;
+    private List<EventModel> events;
 
     public CreateEventResult() {
 
     }
 
-    public CreateEventResult(FamilyModel family) {
-        this.family = family;
+    public CreateEventResult(List<EventModel> events) {
+        this.events = events;
     }
 
     public CreateEventResult(Builder builder) {
-        this.family = builder.family;
+        this.events = builder.events;
     }
 
-    public FamilyModel getFamily() {
-        return family;
+    public List<EventModel> getEvents() {
+        return events;
     }
 
-    public void setFamily(FamilyModel family) {
-        this.family = family;
+    public void setEvents(List<EventModel> events) {
+        this.events = events;
     }
 
     public static Builder builder() {
@@ -30,10 +33,10 @@ public class CreateEventResult {
     }
 
     public static final class Builder {
-        private FamilyModel family;
+        private List<EventModel> events;
 
-        public Builder withFamilyModel(FamilyModel family) {
-            this.family = family;
+        public Builder withEvents(List<EventModel> events) {
+            this.events = events;
             return this;
         }
 
